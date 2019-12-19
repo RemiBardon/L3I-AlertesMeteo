@@ -3,19 +3,22 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B95799BD322F95BFE26508C /* Pods_Alertes_Meteo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F03F31610E41B813F9474CA6 /* Pods_Alertes_Meteo.framework */; };
 		570526D623AB8B77008B179F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570526D523AB8B77008B179F /* AppDelegate.swift */; };
 		570526D823AB8B77008B179F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570526D723AB8B77008B179F /* SceneDelegate.swift */; };
 		570526DA23AB8B77008B179F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570526D923AB8B77008B179F /* ContentView.swift */; };
 		570526DC23AB8B7F008B179F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 570526DB23AB8B7F008B179F /* Assets.xcassets */; };
 		570526DF23AB8B7F008B179F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 570526DE23AB8B7F008B179F /* Preview Assets.xcassets */; };
 		570526E223AB8B7F008B179F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 570526E023AB8B7F008B179F /* LaunchScreen.storyboard */; };
+		570526EA23AB8CAF008B179F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 570526E923AB8CAE008B179F /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		275F135C4DE0C8C9E132D95A /* Pods-Alertes Meteo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Alertes Meteo.debug.xcconfig"; path = "Target Support Files/Pods-Alertes Meteo/Pods-Alertes Meteo.debug.xcconfig"; sourceTree = "<group>"; };
 		570526D223AB8B77008B179F /* Alertes Meteo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Alertes Meteo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		570526D523AB8B77008B179F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		570526D723AB8B77008B179F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +27,9 @@
 		570526DE23AB8B7F008B179F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		570526E123AB8B7F008B179F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		570526E323AB8B7F008B179F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		570526E923AB8CAE008B179F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F03F31610E41B813F9474CA6 /* Pods_Alertes_Meteo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Alertes_Meteo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4FD6FCCA5EB1CD178EE02D4 /* Pods-Alertes Meteo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Alertes Meteo.release.xcconfig"; path = "Target Support Files/Pods-Alertes Meteo/Pods-Alertes Meteo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B95799BD322F95BFE26508C /* Pods_Alertes_Meteo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +49,8 @@
 			children = (
 				570526D423AB8B77008B179F /* Alertes Meteo */,
 				570526D323AB8B77008B179F /* Products */,
+				D7D604E1EC29ED978F42EEE0 /* Pods */,
+				C060293D0C4FC8DDA2737835 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,6 +65,7 @@
 		570526D423AB8B77008B179F /* Alertes Meteo */ = {
 			isa = PBXGroup;
 			children = (
+				570526E923AB8CAE008B179F /* GoogleService-Info.plist */,
 				570526D523AB8B77008B179F /* AppDelegate.swift */,
 				570526D723AB8B77008B179F /* SceneDelegate.swift */,
 				570526D923AB8B77008B179F /* ContentView.swift */,
@@ -75,6 +85,23 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		C060293D0C4FC8DDA2737835 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F03F31610E41B813F9474CA6 /* Pods_Alertes_Meteo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D7D604E1EC29ED978F42EEE0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				275F135C4DE0C8C9E132D95A /* Pods-Alertes Meteo.debug.xcconfig */,
+				F4FD6FCCA5EB1CD178EE02D4 /* Pods-Alertes Meteo.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -82,9 +109,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 570526E623AB8B7F008B179F /* Build configuration list for PBXNativeTarget "Alertes Meteo" */;
 			buildPhases = (
+				4A214A0FCD7996527E526375 /* [CP] Check Pods Manifest.lock */,
 				570526CE23AB8B77008B179F /* Sources */,
 				570526CF23AB8B77008B179F /* Frameworks */,
 				570526D023AB8B77008B179F /* Resources */,
+				8ED446A1DEFDCFBE70052862 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -134,12 +163,55 @@
 			buildActionMask = 2147483647;
 			files = (
 				570526E223AB8B7F008B179F /* LaunchScreen.storyboard in Resources */,
+				570526EA23AB8CAF008B179F /* GoogleService-Info.plist in Resources */,
 				570526DF23AB8B7F008B179F /* Preview Assets.xcassets in Resources */,
 				570526DC23AB8B7F008B179F /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4A214A0FCD7996527E526375 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Alertes Meteo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8ED446A1DEFDCFBE70052862 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Alertes Meteo/Pods-Alertes Meteo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Alertes Meteo/Pods-Alertes Meteo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Alertes Meteo/Pods-Alertes Meteo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		570526CE23AB8B77008B179F /* Sources */ = {
@@ -282,6 +354,7 @@
 		};
 		570526E723AB8B7F008B179F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 275F135C4DE0C8C9E132D95A /* Pods-Alertes Meteo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -289,6 +362,7 @@
 				DEVELOPMENT_TEAM = 5SYM9A33ZK;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Alertes Meteo/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -302,6 +376,7 @@
 		};
 		570526E823AB8B7F008B179F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F4FD6FCCA5EB1CD178EE02D4 /* Pods-Alertes Meteo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -309,6 +384,7 @@
 				DEVELOPMENT_TEAM = 5SYM9A33ZK;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Alertes Meteo/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
