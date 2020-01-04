@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 		if let windowScene = scene as? UIWindowScene {
 		    let window = UIWindow(windowScene: windowScene)
-			let vc = AlertsViewController(style: .grouped)
+			let vc = AlertListViewController(style: .grouped)
 			let nc = UINavigationController(rootViewController: vc)
 			nc.navigationBar.prefersLargeTitles = true
 		    window.rootViewController = nc

@@ -1,5 +1,5 @@
 //
-//  AlertsViewController.swift
+//  AlertListViewController.swift
 //  Alertes Meteo
 //
 //  Created by BARDON Rémi on 04/01/2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AlertsViewController: UITableViewController {
+class AlertListViewController: UITableViewController {
 	
 	private let reuseIdentifier = "alertCell"
 	
