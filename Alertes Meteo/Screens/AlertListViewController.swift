@@ -24,7 +24,6 @@ class AlertListViewController: UITableViewController {
 		view.backgroundColor = .systemGroupedBackground
 		
 		configureNotificationCenter()
-		configureTableView()
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -78,10 +77,6 @@ class AlertListViewController: UITableViewController {
 		}
 	}
 	
-	private func configureTableView() {
-		tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
-	}
-	
 	private func configureDataSource() {
 		dataSource.listenForNewAlerts()
 		subscriptionCanceller = dataSource.$alerts
@@ -110,10 +105,12 @@ class AlertListViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { dataSource.alerts.count }
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
+		let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) ?? UITableViewCell(style: .subtitle, reuseIdentifier: reuseIdentifier)
 		
 		if indexPath.row < dataSource.alerts.count {
-			cell.textLabel?.text = "Alerte \(dataSource.alerts[indexPath.row].id)"
+			let alert = dataSource.alerts[indexPath.row]
+			cell.textLabel?.text = alert.typeDescription
+			cell.detailTextLabel?.text = alert.id
 		} else {
 			#if DEBUG
 			print("\(type(of: self)).\(#function): Warning: indexPath.row >= dataSource.alerts.count")
@@ -130,7 +127,7 @@ class AlertListViewController: UITableViewController {
 		
 		let vc = AlertDetailViewController()
 		if indexPath.row < dataSource.alerts.count {
-			vc.alertId = dataSource.alerts[indexPath.row].id
+			vc.alert = dataSource.alerts[indexPath.row]
 		}
 		navigationController.pushViewController(vc, animated: true)
 	}

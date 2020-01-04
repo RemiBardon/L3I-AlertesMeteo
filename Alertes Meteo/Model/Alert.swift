@@ -12,6 +12,8 @@ struct Alert: Decodable {
 	
 	let id: String
 	let timestamp: String
+	let type: String
+	let message: String?
 	let windSpeed: Float?
 	let windDirection: Float?
 	let temperature: Float?
@@ -22,10 +24,25 @@ struct Alert: Decodable {
 	let latitude: Double?
 	let longitude: Double?
 	
+	var typeDescription: String {
+		switch type {
+		case "info":
+			return "Information"
+		case "crit":
+			return "Alerte critique"
+		case "warn":
+			return "Avertissement"
+		default:
+			return "Alerte"
+		}
+	}
+	
 	init(from decoder: Decoder) throws {
 		let container 	= try decoder.container(keyedBy: CodingKeys.self)
 		id 				= try container.decode(String.self, forKey: .id)
 		timestamp 		= try container.decode(String.self, forKey: .timestamp)
+		type 			= try container.decode(String.self, forKey: .type)
+		message 		= try container.decodeIfPresent(String.self, forKey: .message)
 		windSpeed 		= try container.decodeIfPresent(Float.self, forKey: .windSpeed)
 		windDirection 	= try container.decodeIfPresent(Float.self, forKey: .windDirection)
 		temperature 	= try container.decodeIfPresent(Float.self, forKey: .temperature)
@@ -37,9 +54,11 @@ struct Alert: Decodable {
 		longitude 		= try container.decodeIfPresent(Double.self, forKey: .longitude)
 	}
 	
-	enum CodingKeys: String, CodingKey {
+	private enum CodingKeys: String, CodingKey {
 		case id = "documentId"
 		case timestamp
+		case type
+		case message
 		case windSpeed = "wind_speed"
 		case windDirection = "wind_direction"
 		case temperature
