@@ -23,14 +23,11 @@ class AlertListViewController: UITableViewController {
 		
 		view.backgroundColor = .systemGroupedBackground
 		
+		configureDataSource()
 		configureNotificationCenter()
 	}
 	
-	override func viewWillAppear(_ animated: Bool) {
-		configureDataSource()
-	}
-	
-	override func viewWillDisappear(_ animated: Bool) {
+	deinit {
 		dataSource.stopListeningForNewAlerts()
 		subscriptionCanceller?.cancel()
 	}
