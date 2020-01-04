@@ -65,13 +65,10 @@
 		570526D423AB8B77008B179F /* Alertes Meteo */ = {
 			isa = PBXGroup;
 			children = (
-				570526D523AB8B77008B179F /* AppDelegate.swift */,
-				570526D723AB8B77008B179F /* SceneDelegate.swift */,
-				57EFFCC723C0DE9500BFBCBA /* AlertListViewController.swift */,
-				570526DB23AB8B7F008B179F /* Assets.xcassets */,
-				570526E023AB8B7F008B179F /* LaunchScreen.storyboard */,
-				570526E323AB8B7F008B179F /* Info.plist */,
-				570526E923AB8CAE008B179F /* GoogleService-Info.plist */,
+				57EFFCCF23C0EE3100BFBCBA /* Model */,
+				57EFFCCC23C0ED6000BFBCBA /* Views */,
+				57EFFCCD23C0ED6C00BFBCBA /* Screens */,
+				57EFFCCE23C0ED7C00BFBCBA /* Supporting Files */,
 				570526DD23AB8B7F008B179F /* Preview Content */,
 			);
 			path = "Alertes Meteo";
@@ -83,6 +80,41 @@
 				570526DE23AB8B7F008B179F /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		57EFFCCC23C0ED6000BFBCBA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		57EFFCCD23C0ED6C00BFBCBA /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				57EFFCC723C0DE9500BFBCBA /* AlertListViewController.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		57EFFCCE23C0ED7C00BFBCBA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				570526D523AB8B77008B179F /* AppDelegate.swift */,
+				570526D723AB8B77008B179F /* SceneDelegate.swift */,
+				570526DB23AB8B7F008B179F /* Assets.xcassets */,
+				570526E023AB8B7F008B179F /* LaunchScreen.storyboard */,
+				570526E323AB8B7F008B179F /* Info.plist */,
+				570526E923AB8CAE008B179F /* GoogleService-Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		57EFFCCF23C0EE3100BFBCBA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		C060293D0C4FC8DDA2737835 /* Frameworks */ = {
@@ -361,7 +393,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Alertes Meteo/Preview Content\"";
 				DEVELOPMENT_TEAM = 5SYM9A33ZK;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "Alertes Meteo/Info.plist";
+				INFOPLIST_FILE = "Alertes Meteo/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -383,7 +415,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Alertes Meteo/Preview Content\"";
 				DEVELOPMENT_TEAM = 5SYM9A33ZK;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "Alertes Meteo/Info.plist";
+				INFOPLIST_FILE = "Alertes Meteo/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
