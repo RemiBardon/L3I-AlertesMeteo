@@ -8,14 +8,19 @@
 
 import UIKit
 
-class AlertsViewController: UIViewController {
+class AlertsViewController: UITableViewController {
+	
+	private let reuseIdentifier = "alertCell"
 	
 	override func viewDidLoad() {
-		title = "Alertes"
+		super.viewDidLoad()
 		
-		view.backgroundColor = .systemBackground
+		title = "Alertes météo"
+		
+		view.backgroundColor = .secondarySystemBackground
 		
 		configureNotificationCenter()
+		configureTableView()
 	}
 	
 	private func configureNotificationCenter() {
@@ -58,6 +63,26 @@ class AlertsViewController: UIViewController {
 				// Schedule a notification with a badge and sound.
 			}
 		}
+	}
+	
+	private func configureTableView() {
+		tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+	}
+	
+	// MARK: - UITableViewDelegate
+	
+	override func numberOfSections(in tableView: UITableView) -> Int { 3 }
+	
+	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		"Section \(section)"
+	}
+	
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { 20 }
+	
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
+		cell.textLabel?.text = "Cell (\(indexPath.section);\(indexPath.row))"
+		return cell
 	}
 	
 }
