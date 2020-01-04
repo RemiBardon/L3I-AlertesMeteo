@@ -32,6 +32,7 @@ class AlertListViewController: UITableViewController {
 	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
+		dataSource.stopListeningForNewAlerts()
 		subscriptionCanceller?.cancel()
 	}
 	
@@ -79,13 +80,10 @@ class AlertListViewController: UITableViewController {
 	
 	private func configureTableView() {
 		tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
-		
-		let refreshControl = UIRefreshControl()
-		refreshControl.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
-		tableView.refreshControl = refreshControl
 	}
 	
 	private func configureDataSource() {
+		dataSource.listenForNewAlerts()
 		subscriptionCanceller = dataSource.$alerts
 			.receive(on: RunLoop.main)
 			.sink { [weak self] (alerts: [Alert]) in
@@ -135,12 +133,6 @@ class AlertListViewController: UITableViewController {
 			vc.alertId = dataSource.alerts[indexPath.row].id
 		}
 		navigationController.pushViewController(vc, animated: true)
-	}
-	
-	// MARK: - UIRefreshControl Handler
-	
-	@objc func handleRefreshControl() {
-		self.dataSource.refreshAlerts()
 	}
 	
 }
