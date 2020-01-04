@@ -12,6 +12,9 @@ class AlertDetailViewController: UIViewController {
 	
 	var alert: Alert?
 	
+	private var scrollView: UIScrollView!
+	private var messageLabel: UILabel!
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -34,6 +37,103 @@ class AlertDetailViewController: UIViewController {
 		}
 		
 		title = alert.typeDescription
+		
+		configureScrollView()
+		configureMessage()
+		configureDetails()
+	}
+	
+	private func configureScrollView() {
+		scrollView = UIScrollView()
+		scrollView.showsHorizontalScrollIndicator = false
+		scrollView.contentInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+		
+		view.addSubview(scrollView)
+		
+		scrollView.translatesAutoresizingMaskIntoConstraints = false
+		
+		NSLayoutConstraint.activate([
+			scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+			scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+			scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+		])
+	}
+	
+	private func configureMessage() {
+		#warning("Can clip if text is too long -> use UITextView instead")
+		messageLabel = UILabel()
+		messageLabel.text = alert?.message ?? "Pas de message."
+		messageLabel.font = UIFont.preferredFont(forTextStyle: .title2)
+		
+		scrollView.addSubview(messageLabel)
+		
+		messageLabel.translatesAutoresizingMaskIntoConstraints = false
+		
+		messageLabel.sizeToFit()
+		
+		NSLayoutConstraint.activate([
+			messageLabel.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+			messageLabel.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+			messageLabel.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor)
+		])
+	}
+	
+	private func configureDetails() {
+		let stackView = UIStackView()
+		stackView.axis = .vertical
+		stackView.spacing = 8
+		
+		if let windSpeed = alert?.windSpeed {
+			let label = UILabel()
+			label.text = "Vitesse du vent : \(String(describing: windSpeed))km/h"
+			stackView.addArrangedSubview(label)
+		}
+		if let windDirection = alert?.windDirection {
+			let label = UILabel()
+			label.text = "Direction du vent : \(String(describing: windDirection))°"
+			stackView.addArrangedSubview(label)
+		}
+		if let temperature = alert?.temperature {
+			let label = UILabel()
+			label.text = "Température : \(String(describing: temperature))°C"
+			stackView.addArrangedSubview(label)
+		}
+		if let battery = alert?.battery {
+			let label = UILabel()
+			label.text = "Batterie : \(String(describing: battery))%"
+			stackView.addArrangedSubview(label)
+		}
+		if let roll = alert?.roll {
+			let label = UILabel()
+			label.text = "Roll : \(String(describing: roll))°"
+			stackView.addArrangedSubview(label)
+		}
+		if let pitch = alert?.pitch {
+			let label = UILabel()
+			label.text = "Pitch : \(String(describing: pitch))°"
+			stackView.addArrangedSubview(label)
+		}
+		if let compass = alert?.compass {
+			let label = UILabel()
+			label.text = "Direction : \(String(describing: compass))°"
+			stackView.addArrangedSubview(label)
+		}
+		if let latitude = alert?.latitude, let longitude = alert?.longitude {
+			let label = UILabel()
+			label.text = "Direction : (\(String(describing: latitude)), \(String(describing: longitude)))"
+			stackView.addArrangedSubview(label)
+		}
+		
+		scrollView.addSubview(stackView)
+		
+		stackView.translatesAutoresizingMaskIntoConstraints = false
+		
+		NSLayoutConstraint.activate([
+			stackView.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 16.0),
+			stackView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+			stackView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor)
+		])
 	}
 	
 }
