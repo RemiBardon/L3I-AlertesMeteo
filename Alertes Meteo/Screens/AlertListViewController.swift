@@ -21,7 +21,7 @@ class AlertListViewController: UITableViewController {
 		
 		title = "Alertes météo"
 		
-		view.backgroundColor = .secondarySystemBackground
+		view.backgroundColor = .systemGroupedBackground
 		
 		configureNotificationCenter()
 		configureTableView()
