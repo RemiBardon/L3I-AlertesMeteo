@@ -16,19 +16,6 @@ class AlertsDataSource: ObservableObject {
 	
 	private var alertsListener: ListenerRegistration?
 	
-	func refreshAlerts() {
-		// Pour l'instant, on fait semblant d'envoyer une requête aux serveurs
-		// en attendant un peu puis en ajoutant de nouvelles alertes
-		DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [weak self] in
-			guard let self = self else { return }
-			
-			for n in (self.alerts.count..<self.alerts.count+2) {
-				let id = String(describing: n)
-				self.alerts.append(Alert(id: id))
-			}
-		}
-	}
-	
 	func listenForNewAlerts() {
 		// Get realtime updates with Cloud Firestore
 		// https://firebase.google.com/docs/firestore/query-data/listen
@@ -47,7 +34,7 @@ class AlertsDataSource: ObservableObject {
 					return
 				}
 				
-				querySnapshot.documentChanges.forEach { diff in
+				for diff in querySnapshot.documentChanges {
 					#if DEBUG
 					switch diff.type {
 					case .added:
@@ -60,13 +47,15 @@ class AlertsDataSource: ObservableObject {
 					print(String(describing: diff.document.data()))
 					#endif
 					
-					let newAlert = Alert(id: diff.document.documentID)
+					let data = diff.document.prepareForDecoding()
+					guard let newAlert = try? JSONDecoder().decode(Alert.self, fromJSONObject: data) else { continue }
+					
 					let existingIndex = self.alerts.firstIndex(where: { $0.id == newAlert.id })
 					switch diff.type {
 					case .added, .modified:
 						if let index = existingIndex {
 							self.alerts[index] = newAlert
-						} else if let index = self.alerts.firstIndex(where: { $0.id > newAlert.id }) {
+						} else if let index = self.alerts.firstIndex(where: { newAlert.timestamp > $0.timestamp }) {
 							self.alerts.insert(newAlert, at: index)
 						} else {
 							self.alerts.append(newAlert)

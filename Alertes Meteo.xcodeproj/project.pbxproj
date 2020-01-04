@@ -16,6 +16,8 @@
 		570526EA23AB8CAF008B179F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 570526E923AB8CAE008B179F /* GoogleService-Info.plist */; };
 		570CA5D823C0F41800BB3F77 /* AlertsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570CA5D723C0F41800BB3F77 /* AlertsDataSource.swift */; };
 		570CA5DA23C0F45300BB3F77 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570CA5D923C0F45300BB3F77 /* Alert.swift */; };
+		570CA5DD23C13A2300BB3F77 /* Firebase+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570CA5DC23C13A2300BB3F77 /* Firebase+Ext.swift */; };
+		570CA5DF23C13ABF00BB3F77 /* Foundation+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570CA5DE23C13ABF00BB3F77 /* Foundation+Ext.swift */; };
 		57EFFCC823C0DE9500BFBCBA /* AlertListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EFFCC723C0DE9500BFBCBA /* AlertListViewController.swift */; };
 		57EFFCD123C0EE9A00BFBCBA /* AlertDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EFFCD023C0EE9A00BFBCBA /* AlertDetailViewController.swift */; };
 /* End PBXBuildFile section */
@@ -32,6 +34,8 @@
 		570526E923AB8CAE008B179F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		570CA5D723C0F41800BB3F77 /* AlertsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsDataSource.swift; sourceTree = "<group>"; };
 		570CA5D923C0F45300BB3F77 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		570CA5DC23C13A2300BB3F77 /* Firebase+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Firebase+Ext.swift"; sourceTree = "<group>"; };
+		570CA5DE23C13ABF00BB3F77 /* Foundation+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Ext.swift"; sourceTree = "<group>"; };
 		57EFFCC723C0DE9500BFBCBA /* AlertListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertListViewController.swift; sourceTree = "<group>"; };
 		57EFFCD023C0EE9A00BFBCBA /* AlertDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDetailViewController.swift; sourceTree = "<group>"; };
 		F03F31610E41B813F9474CA6 /* Pods_Alertes_Meteo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Alertes_Meteo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -71,6 +75,7 @@
 		570526D423AB8B77008B179F /* Alertes Meteo */ = {
 			isa = PBXGroup;
 			children = (
+				570CA5DB23C13A0A00BB3F77 /* Extensions */,
 				57EFFCCF23C0EE3100BFBCBA /* Model */,
 				57EFFCCC23C0ED6000BFBCBA /* Views */,
 				57EFFCCD23C0ED6C00BFBCBA /* Screens */,
@@ -86,6 +91,15 @@
 				570526DE23AB8B7F008B179F /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		570CA5DB23C13A0A00BB3F77 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				570CA5DC23C13A2300BB3F77 /* Firebase+Ext.swift */,
+				570CA5DE23C13ABF00BB3F77 /* Foundation+Ext.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		57EFFCCC23C0ED6000BFBCBA /* Views */ = {
@@ -261,8 +275,10 @@
 			files = (
 				570CA5DA23C0F45300BB3F77 /* Alert.swift in Sources */,
 				57EFFCD123C0EE9A00BFBCBA /* AlertDetailViewController.swift in Sources */,
+				570CA5DF23C13ABF00BB3F77 /* Foundation+Ext.swift in Sources */,
 				570526D623AB8B77008B179F /* AppDelegate.swift in Sources */,
 				570CA5D823C0F41800BB3F77 /* AlertsDataSource.swift in Sources */,
+				570CA5DD23C13A2300BB3F77 /* Firebase+Ext.swift in Sources */,
 				570526D823AB8B77008B179F /* SceneDelegate.swift in Sources */,
 				57EFFCC823C0DE9500BFBCBA /* AlertListViewController.swift in Sources */,
 			);
