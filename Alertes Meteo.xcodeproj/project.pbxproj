@@ -15,6 +15,7 @@
 		570526E223AB8B7F008B179F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 570526E023AB8B7F008B179F /* LaunchScreen.storyboard */; };
 		570526EA23AB8CAF008B179F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 570526E923AB8CAE008B179F /* GoogleService-Info.plist */; };
 		57EFFCC823C0DE9500BFBCBA /* AlertListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EFFCC723C0DE9500BFBCBA /* AlertListViewController.swift */; };
+		57EFFCD123C0EE9A00BFBCBA /* AlertDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EFFCD023C0EE9A00BFBCBA /* AlertDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		570526E323AB8B7F008B179F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		570526E923AB8CAE008B179F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		57EFFCC723C0DE9500BFBCBA /* AlertListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertListViewController.swift; sourceTree = "<group>"; };
+		57EFFCD023C0EE9A00BFBCBA /* AlertDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDetailViewController.swift; sourceTree = "<group>"; };
 		F03F31610E41B813F9474CA6 /* Pods_Alertes_Meteo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Alertes_Meteo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4FD6FCCA5EB1CD178EE02D4 /* Pods-Alertes Meteo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Alertes Meteo.release.xcconfig"; path = "Target Support Files/Pods-Alertes Meteo/Pods-Alertes Meteo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -93,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				57EFFCC723C0DE9500BFBCBA /* AlertListViewController.swift */,
+				57EFFCD023C0EE9A00BFBCBA /* AlertDetailViewController.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -250,6 +253,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57EFFCD123C0EE9A00BFBCBA /* AlertDetailViewController.swift in Sources */,
 				570526D623AB8B77008B179F /* AppDelegate.swift in Sources */,
 				570526D823AB8B77008B179F /* SceneDelegate.swift in Sources */,
 				57EFFCC823C0DE9500BFBCBA /* AlertListViewController.swift in Sources */,

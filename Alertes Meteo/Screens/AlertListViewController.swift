@@ -74,15 +74,24 @@ class AlertListViewController: UITableViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int { 3 }
 	
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		"Section \(section)"
+		"Groupe \(section)"
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { 20 }
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
-		cell.textLabel?.text = "Cell (\(indexPath.section);\(indexPath.row))"
+		cell.textLabel?.text = "Alerte (\(indexPath.section);\(indexPath.row))"
+		cell.accessoryType = .disclosureIndicator
 		return cell
+	}
+	
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		guard let navigationController = navigationController else { return }
+		
+		let vc = AlertDetailViewController()
+		vc.alertId = "(\(indexPath.section);\(indexPath.row))"
+		navigationController.pushViewController(vc, animated: true)
 	}
 	
 }
