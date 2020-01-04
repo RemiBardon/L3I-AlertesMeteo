@@ -7,10 +7,14 @@
 //
 
 import UIKit
+import Combine
 
 class AlertListViewController: UITableViewController {
 	
 	private let reuseIdentifier = "alertCell"
+	
+	private let dataSource = AlertsDataSource()
+	private var subscriptionCanceller: AnyCancellable?
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -21,6 +25,14 @@ class AlertListViewController: UITableViewController {
 		
 		configureNotificationCenter()
 		configureTableView()
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		configureDataSource()
+	}
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		subscriptionCanceller?.cancel()
 	}
 	
 	private func configureNotificationCenter() {
@@ -67,22 +79,51 @@ class AlertListViewController: UITableViewController {
 	
 	private func configureTableView() {
 		tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+		
+		let refreshControl = UIRefreshControl()
+		refreshControl.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
+		tableView.refreshControl = refreshControl
+	}
+	
+	private func configureDataSource() {
+		subscriptionCanceller = dataSource.$alerts
+			.receive(on: RunLoop.main)
+			.sink { [weak self] (alerts: [Alert]) in
+				guard let self = self else { return }
+
+				self.tableView.reloadData()
+				
+				// Dismiss the refresh control.
+				DispatchQueue.main.async { [weak self] in
+					guard let self = self else { return }
+					self.tableView.refreshControl?.endRefreshing()
+				}
+			}
 	}
 	
 	// MARK: - UITableViewDelegate
 	
-	override func numberOfSections(in tableView: UITableView) -> Int { 3 }
+	override func numberOfSections(in tableView: UITableView) -> Int { dataSource.alerts.isEmpty ? 0 : 1 }
 	
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		"Groupe \(section)"
+		"Lieu \(section)"
 	}
 	
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { 20 }
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { dataSource.alerts.count }
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
-		cell.textLabel?.text = "Alerte (\(indexPath.section);\(indexPath.row))"
+		
+		if indexPath.row < dataSource.alerts.count {
+			cell.textLabel?.text = "Alerte \(dataSource.alerts[indexPath.row].id)"
+		} else {
+			#if DEBUG
+			print("\(type(of: self)).\(#function): Warning: indexPath.row >= dataSource.alerts.count")
+			#endif
+			cell.textLabel?.text = "Alerte"
+		}
 		cell.accessoryType = .disclosureIndicator
+		
 		return cell
 	}
 	
@@ -90,8 +131,16 @@ class AlertListViewController: UITableViewController {
 		guard let navigationController = navigationController else { return }
 		
 		let vc = AlertDetailViewController()
-		vc.alertId = "(\(indexPath.section);\(indexPath.row))"
+		if indexPath.row < dataSource.alerts.count {
+			vc.alertId = dataSource.alerts[indexPath.row].id
+		}
 		navigationController.pushViewController(vc, animated: true)
+	}
+	
+	// MARK: - UIRefreshControl Handler
+	
+	@objc func handleRefreshControl() {
+		self.dataSource.refreshAlerts()
 	}
 	
 }
