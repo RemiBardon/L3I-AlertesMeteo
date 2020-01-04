@@ -65,13 +65,13 @@
 		570526D423AB8B77008B179F /* Alertes Meteo */ = {
 			isa = PBXGroup;
 			children = (
-				570526E923AB8CAE008B179F /* GoogleService-Info.plist */,
 				570526D523AB8B77008B179F /* AppDelegate.swift */,
 				570526D723AB8B77008B179F /* SceneDelegate.swift */,
 				570526D923AB8B77008B179F /* ContentView.swift */,
 				570526DB23AB8B7F008B179F /* Assets.xcassets */,
 				570526E023AB8B7F008B179F /* LaunchScreen.storyboard */,
 				570526E323AB8B7F008B179F /* Info.plist */,
+				570526E923AB8CAE008B179F /* GoogleService-Info.plist */,
 				570526DD23AB8B7F008B179F /* Preview Content */,
 			);
 			path = "Alertes Meteo";
