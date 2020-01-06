@@ -106,7 +106,7 @@ class AlertListViewController: UITableViewController {
 		
 		if indexPath.row < dataSource.alerts.count {
 			let alert = dataSource.alerts[indexPath.row]
-			cell.textLabel?.text = alert.typeDescription
+			cell.textLabel?.text = alert.levelDescription
 			cell.detailTextLabel?.text = alert.id
 		} else {
 			#if DEBUG

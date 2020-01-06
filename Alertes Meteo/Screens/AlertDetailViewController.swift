@@ -36,7 +36,7 @@ class AlertDetailViewController: UIViewController {
 			return
 		}
 		
-		title = alert.typeDescription
+		title = alert.levelDescription
 		
 		configureScrollView()
 		configureMessage()
