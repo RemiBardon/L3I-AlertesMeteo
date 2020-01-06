@@ -26,11 +26,11 @@ struct Alert: Decodable {
 	
 	var typeDescription: String {
 		switch type {
-		case "info":
+		case "INFO":
 			return "Information"
-		case "crit":
+		case "CRITICAL":
 			return "Alerte critique"
-		case "warn":
+		case "WARNING":
 			return "Avertissement"
 		default:
 			return "Alerte"
