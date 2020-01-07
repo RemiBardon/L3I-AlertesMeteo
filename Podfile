@@ -13,6 +13,6 @@ target 'Alertes Meteo' do
   pod 'Firebase/Messaging'
   #pod 'Firebase/InAppMessaging'
   pod 'Firebase/Firestore'
-  #pod 'Firebase/Functions'
+  pod 'Firebase/Functions'
 
 end
