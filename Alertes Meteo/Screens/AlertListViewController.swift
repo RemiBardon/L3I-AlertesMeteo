@@ -27,6 +27,12 @@ class AlertListViewController: UITableViewController {
 		configureNotificationCenter()
 	}
 	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		navigationController?.navigationBar.prefersLargeTitles = true
+	}
+	
 	deinit {
 		dataSource.stopListeningForNewAlerts()
 		subscriptionCanceller?.cancel()
@@ -107,7 +113,7 @@ class AlertListViewController: UITableViewController {
 		if indexPath.row < dataSource.alerts.count {
 			let alert = dataSource.alerts[indexPath.row]
 			cell.textLabel?.text = alert.levelDescription
-			cell.detailTextLabel?.text = alert.id
+			cell.detailTextLabel?.text = alert.message
 		} else {
 			#if DEBUG
 			print("\(type(of: self)).\(#function): Warning: indexPath.row >= dataSource.alerts.count")

@@ -8,12 +8,9 @@
 
 import UIKit
 
-class AlertDetailViewController: UIViewController {
+class AlertDetailViewController: UITableViewController {
 	
 	var alert: Alert?
-	
-	private var scrollView: UIScrollView!
-	private var messageLabel: UILabel!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -38,102 +35,54 @@ class AlertDetailViewController: UIViewController {
 		
 		title = alert.levelDescription
 		
-		configureScrollView()
-		configureMessage()
-		configureDetails()
+		configureTableView()
 	}
 	
-	private func configureScrollView() {
-		scrollView = UIScrollView()
-		scrollView.showsHorizontalScrollIndicator = false
-		scrollView.contentInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
 		
-		view.addSubview(scrollView)
-		
-		scrollView.translatesAutoresizingMaskIntoConstraints = false
-		
-		NSLayoutConstraint.activate([
-			scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-			scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-			scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-			scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-		])
+		navigationController?.navigationBar.prefersLargeTitles = false
 	}
 	
-	private func configureMessage() {
-		#warning("Can clip if text is too long -> use UITextView instead")
-		messageLabel = UILabel()
-		messageLabel.text = alert?.message ?? "Pas de message."
-		messageLabel.font = UIFont.preferredFont(forTextStyle: .title2)
-		
-		scrollView.addSubview(messageLabel)
-		
-		messageLabel.translatesAutoresizingMaskIntoConstraints = false
-		
-		messageLabel.sizeToFit()
-		
-		NSLayoutConstraint.activate([
-			messageLabel.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-			messageLabel.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-			messageLabel.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor)
-		])
+	private func configureTableView() {
+		tableView.allowsSelection = false
+		tableView.separatorStyle = .none
 	}
 	
-	private func configureDetails() {
-		let stackView = UIStackView()
-		stackView.axis = .vertical
-		stackView.spacing = 8
-		
-		if let windSpeed = alert?.windSpeed {
-			let label = UILabel()
-			label.text = "Vitesse du vent : \(String(describing: windSpeed))km/h"
-			stackView.addArrangedSubview(label)
+	// MARK: - UITableViewDelegate
+	
+	override func numberOfSections(in tableView: UITableView) -> Int { 1 }
+	
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		switch section {
+		case 0:
+			return 2
+		default:
+			return 0
 		}
-		if let windDirection = alert?.windDirection {
-			let label = UILabel()
-			label.text = "Direction du vent : \(String(describing: windDirection))°"
-			stackView.addArrangedSubview(label)
-		}
-		if let temperature = alert?.temperature {
-			let label = UILabel()
-			label.text = "Température : \(String(describing: temperature))°C"
-			stackView.addArrangedSubview(label)
-		}
-		if let battery = alert?.battery {
-			let label = UILabel()
-			label.text = "Batterie : \(String(describing: battery))%"
-			stackView.addArrangedSubview(label)
-		}
-		if let roll = alert?.roll {
-			let label = UILabel()
-			label.text = "Roll : \(String(describing: roll))°"
-			stackView.addArrangedSubview(label)
-		}
-		if let pitch = alert?.pitch {
-			let label = UILabel()
-			label.text = "Pitch : \(String(describing: pitch))°"
-			stackView.addArrangedSubview(label)
-		}
-		if let compass = alert?.compass {
-			let label = UILabel()
-			label.text = "Direction : \(String(describing: compass))°"
-			stackView.addArrangedSubview(label)
-		}
-		if let latitude = alert?.latitude, let longitude = alert?.longitude {
-			let label = UILabel()
-			label.text = "Direction : (\(String(describing: latitude)), \(String(describing: longitude)))"
-			stackView.addArrangedSubview(label)
-		}
-		
-		scrollView.addSubview(stackView)
-		
-		stackView.translatesAutoresizingMaskIntoConstraints = false
-		
-		NSLayoutConstraint.activate([
-			stackView.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 16.0),
-			stackView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-			stackView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor)
-		])
 	}
+	
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		switch indexPath.row {
+		case 0:
+			let cell = tableView.dequeueReusableCell(withIdentifier: AlertMessageTableViewCell.reuseIdentifier) as? AlertMessageTableViewCell ?? AlertMessageTableViewCell()
+			
+			cell.message = alert?.message
+			
+			return cell
+		case 1:
+			let cell = tableView.dequeueReusableCell(withIdentifier: AlertValuesTableViewCell.reuseIdentifier) as? AlertValuesTableViewCell ?? AlertValuesTableViewCell()
+			
+			cell.alert = alert
+			
+			return cell
+		default:
+			return tableView.dequeueReusableCell(withIdentifier: "default") ?? UITableViewCell(style: .default, reuseIdentifier: "default")
+		}
+	}
+	
+	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { UITableView.automaticDimension }
+	
+	override func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool { false }
 	
 }
