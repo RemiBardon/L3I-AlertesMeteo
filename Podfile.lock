@@ -172,6 +172,9 @@ PODS:
   - Firebase/Functions (6.14.0):
     - Firebase/CoreOnly
     - FirebaseFunctions (~> 2.5.1)
+  - Firebase/InAppMessaging (6.14.0):
+    - Firebase/CoreOnly
+    - FirebaseInAppMessaging (~> 0.15.6)
   - Firebase/Messaging (6.14.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 4.1.10)
@@ -206,6 +209,11 @@ PODS:
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 6.0)
     - GTMSessionFetcher/Core (~> 1.1)
+  - FirebaseInAppMessaging (0.15.6):
+    - FirebaseAnalyticsInterop (~> 1.3)
+    - FirebaseCore (~> 6.2)
+    - FirebaseInstanceID (~> 4.0)
+    - GoogleDataTransportCCTSupport (~> 1.0)
   - FirebaseInstanceID (4.2.8):
     - FirebaseCore (~> 6.5)
     - GoogleUtilities/Environment (~> 6.4)
@@ -267,6 +275,7 @@ PODS:
 DEPENDENCIES:
   - Firebase/Firestore
   - Firebase/Functions
+  - Firebase/InAppMessaging
   - Firebase/Messaging
 
 SPEC REPOS:
@@ -281,6 +290,7 @@ SPEC REPOS:
     - FirebaseCoreDiagnosticsInterop
     - FirebaseFirestore
     - FirebaseFunctions
+    - FirebaseInAppMessaging
     - FirebaseInstanceID
     - FirebaseMessaging
     - GoogleDataTransport
@@ -304,6 +314,7 @@ SPEC CHECKSUMS:
   FirebaseCoreDiagnosticsInterop: e9b1b023157e3a2fc6418b5cb601e79b9af7b3a0
   FirebaseFirestore: 52120e2833f804a874ba1a9f59aab864a8ae2286
   FirebaseFunctions: 5af7c35d1c5e41608fecbb667eb6c4e672e318d0
+  FirebaseInAppMessaging: 8e1190f8d8cf6f1fcfc8f82f99e0ecce522fc02b
   FirebaseInstanceID: ce993a3c3670a8f5d47ce371ac5d143c560608c5
   FirebaseMessaging: 089b7a4991425783384acc8bcefcd78c0af913bd
   GoogleDataTransport: 8e9b210c97d55fbff306cc5468ff91b9cb32dcf5
@@ -316,6 +327,6 @@ SPEC CHECKSUMS:
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   Protobuf: dd1aaea7140debfe4dd0683fb8ef208e527ae153
 
-PODFILE CHECKSUM: 22f9b4abaaa4ce00d52f5fef91189e796796b70a
+PODFILE CHECKSUM: 222eb76d288823d90df6c883451e3f696dffc6b5
 
 COCOAPODS: 1.8.4

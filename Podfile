@@ -11,7 +11,7 @@ target 'Alertes Meteo' do
   # https://firebase.google.com/docs/ios/setup#available-pods
 
   pod 'Firebase/Messaging'
-  #pod 'Firebase/InAppMessaging'
+  pod 'Firebase/InAppMessaging'
   pod 'Firebase/Firestore'
   pod 'Firebase/Functions'
 
