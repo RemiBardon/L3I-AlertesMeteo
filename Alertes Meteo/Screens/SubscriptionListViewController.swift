@@ -89,8 +89,6 @@ class SubscriptionListViewController: UITableViewController {
 			var actualTopics = UserDefaults.standard.stringArray(forKey: "topicSubscriptions")
 			if actualTopics?.contains(topic) != true {
 				Messaging.messaging().subscribe(toTopic: topic) { [weak self] error in
-					guard let self = self else { return }
-					
 					if let error = error {
 						#if DEBUG
 						print("\(type(of: self)).\(#function): Error subscribing to topic '\(topic)': \(error.localizedDescription)")
@@ -110,8 +108,6 @@ class SubscriptionListViewController: UITableViewController {
 	
 	private func unsubscribe(from topic: String) {
 		Messaging.messaging().unsubscribe(fromTopic: topic) { [weak self] error in
-			guard let self = self else { return }
-			
 			if let error = error {
 				#if DEBUG
 				print("\(type(of: self)).\(#function): Error unsubscribing from topic '\(topic)': \(error.localizedDescription)")
