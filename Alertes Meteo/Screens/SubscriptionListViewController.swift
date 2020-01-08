@@ -8,6 +8,7 @@
 
 import UIKit
 import Combine
+import FirebaseMessaging
 
 class SubscriptionListViewController: UITableViewController {
 	
@@ -68,7 +69,38 @@ class SubscriptionListViewController: UITableViewController {
 		#if DEBUG
 		print("\(type(of: self)).\(#function): Add topic")
 		#endif
-		#warning("Add topic")
+		let alert = UIAlertController(title: "Abonnez-vous à un groupe d'alertes", message: nil, preferredStyle: .alert)
+		alert.addTextField { (textField: UITextField) in
+			textField.placeholder = "Nom du groupe d'alertes"
+		}
+		alert.addAction(UIAlertAction(title: "Annuler", style: .cancel))
+		alert.addAction(UIAlertAction(title: "S'abonner", style: .default, handler: { [weak self] (action: UIAlertAction) in
+			guard let self = self else { return }
+			guard let topic = alert.textFields?.first?.text else {
+				#warning("Show alert if unable to subscribe")
+				return
+			}
+
+			var actualTopics = UserDefaults.standard.stringArray(forKey: "topicSubscriptions")
+			if actualTopics?.contains(topic) != true {
+				Messaging.messaging().subscribe(toTopic: topic) { [weak self] error in
+					guard let self = self else { return }
+					
+					if let error = error {
+						#if DEBUG
+						print("\(type(of: self)).\(#function): Error subscribing to topic '\(topic)': \(error.localizedDescription)")
+						#endif
+					} else {
+						#if DEBUG
+						print("Successfully subscribed to topic '\(topic)'.")
+						#endif
+						actualTopics?.append(topic)
+						UserDefaults.standard.set(actualTopics, forKey: "topicSubscriptions")
+					}
+				}
+			}
+		}))
+		present(alert, animated: true)
 	}
 	
 	// MARK: - UITableViewDelegate
