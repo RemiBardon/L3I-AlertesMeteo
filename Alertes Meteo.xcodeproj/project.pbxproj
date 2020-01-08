@@ -20,6 +20,7 @@
 		570CA5DF23C13ABF00BB3F77 /* Foundation+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570CA5DE23C13ABF00BB3F77 /* Foundation+Ext.swift */; };
 		5744CFD323C497F4000ECA2A /* AlertMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5744CFD223C497F4000ECA2A /* AlertMessageTableViewCell.swift */; };
 		5744CFD523C4A026000ECA2A /* AlertValuesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5744CFD423C4A026000ECA2A /* AlertValuesTableViewCell.swift */; };
+		57A7DDA623C68EBA00031F8E /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A7DDA523C68EB900031F8E /* Topic.swift */; };
 		57CC11A723C5E40000F8CC99 /* SubscriptionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CC11A623C5E40000F8CC99 /* SubscriptionListViewController.swift */; };
 		57CC11A923C5E5E800F8CC99 /* SubscriptionsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CC11A823C5E5E800F8CC99 /* SubscriptionsDataSource.swift */; };
 		57E0153123C5FD3500AF1143 /* TopicsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E0153023C5FD3500AF1143 /* TopicsDataSource.swift */; };
@@ -43,6 +44,7 @@
 		570CA5DE23C13ABF00BB3F77 /* Foundation+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Ext.swift"; sourceTree = "<group>"; };
 		5744CFD223C497F4000ECA2A /* AlertMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertMessageTableViewCell.swift; sourceTree = "<group>"; };
 		5744CFD423C4A026000ECA2A /* AlertValuesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertValuesTableViewCell.swift; sourceTree = "<group>"; };
+		57A7DDA523C68EB900031F8E /* Topic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
 		57CC11A623C5E40000F8CC99 /* SubscriptionListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionListViewController.swift; sourceTree = "<group>"; };
 		57CC11A823C5E5E800F8CC99 /* SubscriptionsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsDataSource.swift; sourceTree = "<group>"; };
 		57E0153023C5FD3500AF1143 /* TopicsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicsDataSource.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 		57EFFCCF23C0EE3100BFBCBA /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				57A7DDA523C68EB900031F8E /* Topic.swift */,
 				570CA5D923C0F45300BB3F77 /* Alert.swift */,
 				57E0153023C5FD3500AF1143 /* TopicsDataSource.swift */,
 				570CA5D723C0F41800BB3F77 /* AlertsDataSource.swift */,
@@ -309,6 +312,7 @@
 				570526D823AB8B77008B179F /* SceneDelegate.swift in Sources */,
 				5744CFD523C4A026000ECA2A /* AlertValuesTableViewCell.swift in Sources */,
 				57EFFCC823C0DE9500BFBCBA /* AlertListViewController.swift in Sources */,
+				57A7DDA623C68EBA00031F8E /* Topic.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

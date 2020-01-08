@@ -12,7 +12,9 @@ import FirebaseFirestore
 
 class TopicsDataSource: ObservableObject {
 	
-	@Published var topics = [(name: String, alerts: [Alert])]()
+	var topics = [Topic]()
+	
+	let topicsSubject = PassthroughSubject<Void, Never>()
 	
 	private var topicListeners = [ListenerRegistration]()
 	
@@ -27,13 +29,15 @@ class TopicsDataSource: ObservableObject {
 		guard let topicSubscriptions = UserDefaults.standard.stringArray(forKey: "topicSubscriptions") else { return }
 		
 		for topic in topicSubscriptions {
-			topics.append((name: topic, alerts: [Alert]()))
+			topics.append(Topic(name: topic))
 			topicListeners.append(
 				db.collection("alerts")
 					.whereField("topic", isEqualTo: topic)
 					.order(by: "timestamp", descending: true)
 					.limit(to: 5)
-					.addSnapshotListener { (querySnapshot, error) in
+					.addSnapshotListener { [weak self] (querySnapshot, error) in
+						guard let self = self else { return }
+						
 						if let error = error {
 							print("\(type(of: self)).\(#function): Error retreiving collection: \(error)")
 							return
@@ -59,26 +63,26 @@ class TopicsDataSource: ObservableObject {
 							let data = diff.document.prepareForDecoding()
 							guard let newAlert = try? JSONDecoder().decode(Alert.self, fromJSONObject: data) else { continue }
 							
-							guard var alerts = self.topics.first(where: { (name: String, alerts: [Alert]) -> Bool in
-								name == topic
-							})?.alerts else { continue }
+							guard let topicIndex = topicSubscriptions.firstIndex(of: topic) else { continue }
 							
-							let existingIndex = alerts.firstIndex(where: { $0.id == newAlert.id })
+							let existingIndex = self.topics[topicIndex].alerts.firstIndex(where: { $0.id == newAlert.id })
 							switch diff.type {
 							case .added, .modified:
 								if let index = existingIndex {
-									alerts[index] = newAlert
-								} else if let index = alerts.firstIndex(where: { newAlert.timestamp > $0.timestamp }) {
-									alerts.insert(newAlert, at: index)
+									self.topics[topicIndex].alerts[index] = newAlert
+								} else if let index = self.topics[topicIndex].alerts.firstIndex(where: { newAlert.timestamp > $0.timestamp }) {
+									self.topics[topicIndex].alerts.insert(newAlert, at: index)
 								} else {
-									alerts.append(newAlert)
+									self.topics[topicIndex].alerts.append(newAlert)
 								}
 							case .removed:
 								if let index = existingIndex {
-									alerts.remove(at: index)
+									self.topics[topicIndex].alerts.remove(at: index)
 								}
 							}
 						}
+						
+						self.topicsSubject.send()
 					}
 			)
 		}

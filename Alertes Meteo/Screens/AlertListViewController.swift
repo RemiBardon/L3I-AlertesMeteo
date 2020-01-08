@@ -88,9 +88,9 @@ class AlertListViewController: UITableViewController {
 	
 	private func configureDataSource() {
 		dataSource.listen()
-		subscriptionCanceller = dataSource.$topics
+		subscriptionCanceller = dataSource.topicsSubject
 			.receive(on: RunLoop.main)
-			.sink { [weak self] (topics: [(name: String, alerts: [Alert])]) in
+			.sink { [weak self] in
 				guard let self = self else { return }
 
 				self.tableView.reloadData()
