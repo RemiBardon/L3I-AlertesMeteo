@@ -103,10 +103,14 @@ class AlertListViewController: UITableViewController {
 			}
 	}
 	
-	@objc func showSubscriptionList() {
+	@objc private func showSubscriptionList() {
 		#if DEBUG
 		print("\(type(of: self)).\(#function): Show subscription list")
 		#endif
+		let vc = SubscriptionListViewController(style: .plain)
+		let nc = UINavigationController(rootViewController: vc)
+		nc.modalPresentationStyle = .pageSheet
+		present(nc, animated: true)
 	}
 	
 	// MARK: - UITableViewDelegate

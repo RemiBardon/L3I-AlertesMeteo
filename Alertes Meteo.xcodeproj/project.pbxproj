@@ -20,6 +20,8 @@
 		570CA5DF23C13ABF00BB3F77 /* Foundation+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570CA5DE23C13ABF00BB3F77 /* Foundation+Ext.swift */; };
 		5744CFD323C497F4000ECA2A /* AlertMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5744CFD223C497F4000ECA2A /* AlertMessageTableViewCell.swift */; };
 		5744CFD523C4A026000ECA2A /* AlertValuesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5744CFD423C4A026000ECA2A /* AlertValuesTableViewCell.swift */; };
+		57CC11A723C5E40000F8CC99 /* SubscriptionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CC11A623C5E40000F8CC99 /* SubscriptionListViewController.swift */; };
+		57CC11A923C5E5E800F8CC99 /* SubscriptionsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CC11A823C5E5E800F8CC99 /* SubscriptionsDataSource.swift */; };
 		57EFFCC823C0DE9500BFBCBA /* AlertListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EFFCC723C0DE9500BFBCBA /* AlertListViewController.swift */; };
 		57EFFCD123C0EE9A00BFBCBA /* AlertDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EFFCD023C0EE9A00BFBCBA /* AlertDetailViewController.swift */; };
 /* End PBXBuildFile section */
@@ -40,6 +42,8 @@
 		570CA5DE23C13ABF00BB3F77 /* Foundation+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Ext.swift"; sourceTree = "<group>"; };
 		5744CFD223C497F4000ECA2A /* AlertMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertMessageTableViewCell.swift; sourceTree = "<group>"; };
 		5744CFD423C4A026000ECA2A /* AlertValuesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertValuesTableViewCell.swift; sourceTree = "<group>"; };
+		57CC11A623C5E40000F8CC99 /* SubscriptionListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionListViewController.swift; sourceTree = "<group>"; };
+		57CC11A823C5E5E800F8CC99 /* SubscriptionsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsDataSource.swift; sourceTree = "<group>"; };
 		57EFFCC723C0DE9500BFBCBA /* AlertListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertListViewController.swift; sourceTree = "<group>"; };
 		57EFFCD023C0EE9A00BFBCBA /* AlertDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDetailViewController.swift; sourceTree = "<group>"; };
 		F03F31610E41B813F9474CA6 /* Pods_Alertes_Meteo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Alertes_Meteo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -128,6 +132,7 @@
 			children = (
 				57EFFCC723C0DE9500BFBCBA /* AlertListViewController.swift */,
 				57EFFCD023C0EE9A00BFBCBA /* AlertDetailViewController.swift */,
+				57CC11A623C5E40000F8CC99 /* SubscriptionListViewController.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -150,6 +155,7 @@
 			children = (
 				570CA5D923C0F45300BB3F77 /* Alert.swift */,
 				570CA5D723C0F41800BB3F77 /* AlertsDataSource.swift */,
+				57CC11A823C5E5E800F8CC99 /* SubscriptionsDataSource.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -287,8 +293,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57CC11A723C5E40000F8CC99 /* SubscriptionListViewController.swift in Sources */,
 				570CA5DA23C0F45300BB3F77 /* Alert.swift in Sources */,
 				57EFFCD123C0EE9A00BFBCBA /* AlertDetailViewController.swift in Sources */,
+				57CC11A923C5E5E800F8CC99 /* SubscriptionsDataSource.swift in Sources */,
 				570CA5DF23C13ABF00BB3F77 /* Foundation+Ext.swift in Sources */,
 				5744CFD323C497F4000ECA2A /* AlertMessageTableViewCell.swift in Sources */,
 				570526D623AB8B77008B179F /* AppDelegate.swift in Sources */,

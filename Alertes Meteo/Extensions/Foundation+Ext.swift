@@ -15,3 +15,12 @@ extension JSONDecoder {
     }
 	
 }
+
+// https://stackoverflow.com/a/47856467/10967642
+extension UserDefaults {
+	
+    @objc dynamic var topicSubscriptions: [String] {
+		stringArray(forKey: "topicSubscriptions") ?? [String]()
+    }
+	
+}
