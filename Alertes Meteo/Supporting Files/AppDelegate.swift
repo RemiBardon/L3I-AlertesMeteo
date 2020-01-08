@@ -18,6 +18,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Use Firebase library to configure APIs
 		FirebaseApp.configure()
 		
+		let requiredTopics: [String] = [
+			"testTopic"
+		]
+		
+		var actualTopics: [String] = UserDefaults.standard.stringArray(forKey: "topicSubscriptions") ?? [String]()
+		
+		for topic in requiredTopics {
+			if !actualTopics.contains(topic) {
+				Messaging.messaging().subscribe(toTopic: topic) { [weak self] error in
+					guard let self = self else { return }
+					
+					if let error = error {
+						#if DEBUG
+						print("\(type(of: self)).\(#function): Error subscribing to topic '\(topic)': \(error.localizedDescription)")
+						#endif
+					} else {
+						#if DEBUG
+						print("Successfully subscribed to topic '\(topic)'.")
+						#endif
+						actualTopics.append(topic)
+						UserDefaults.standard.set(actualTopics, forKey: "topicSubscriptions")
+					}
+				}
+			}
+		}
+		
 		return true
 	}
 
