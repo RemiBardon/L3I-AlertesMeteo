@@ -118,7 +118,7 @@ class SubscriptionListViewController: UITableViewController {
 				#endif
 			} else {
 				#if DEBUG
-				print("Successfully subscribed to topic '\(topic)'.")
+				print("Successfully unsubscribed from topic '\(topic)'.")
 				#endif
 				if var actualTopics = UserDefaults.standard.stringArray(forKey: "topicSubscriptions") {
 					actualTopics.removeAll(where: { $0 == topic })
