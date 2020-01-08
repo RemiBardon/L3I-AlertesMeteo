@@ -23,7 +23,7 @@ class AlertListViewController: UITableViewController {
 		
 		view.backgroundColor = .systemGroupedBackground
 		
-		configureAlertsButton()
+		configureNavigationBar()
 		configureDataSource()
 		configureNotificationCenter()
 	}
@@ -39,7 +39,7 @@ class AlertListViewController: UITableViewController {
 		subscriptionCanceller?.cancel()
 	}
 	
-	private func configureAlertsButton() {
+	private func configureNavigationBar() {
 		let item = UIBarButtonItem(title: "Abonnenments", style: .plain, target: self, action: #selector(showSubscriptionList))
 		navigationItem.setRightBarButton(item, animated: false)
 	}
