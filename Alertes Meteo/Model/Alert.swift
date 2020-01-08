@@ -13,6 +13,7 @@ struct Alert: Decodable {
 	let id: String
 	let timestamp: String
 	let level: String
+	let topic: String
 	let message: String?
 	let windSpeed: Float?
 	let windDirection: Float?
@@ -42,6 +43,7 @@ struct Alert: Decodable {
 		id 				= try container.decode(String.self, forKey: .id)
 		timestamp 		= try container.decode(String.self, forKey: .timestamp)
 		level 			= try container.decode(String.self, forKey: .level)
+		topic 			= try container.decode(String.self, forKey: .topic)
 		message 		= try container.decodeIfPresent(String.self, forKey: .message)
 		windSpeed 		= try container.decodeIfPresent(Float.self, forKey: .windSpeed)
 		windDirection 	= try container.decodeIfPresent(Float.self, forKey: .windDirection)
@@ -58,6 +60,7 @@ struct Alert: Decodable {
 		case id = "documentId"
 		case timestamp
 		case level
+		case topic
 		case message
 		case windSpeed = "wind_speed"
 		case windDirection = "wind_direction"
