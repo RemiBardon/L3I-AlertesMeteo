@@ -25,6 +25,7 @@ class SubscriptionListViewController: UITableViewController {
 		view.backgroundColor = .systemBackground
 		
 		configureNavigationBar()
+		configureTableView()
 		configureDataSource()
     }
 	
@@ -39,6 +40,10 @@ class SubscriptionListViewController: UITableViewController {
 		
 		navigationItem.setLeftBarButton(leftItem, animated: false)
 		navigationItem.setRightBarButton(rightItem, animated: false)
+	}
+	
+	private func configureTableView() {
+		tableView.allowsSelection = false
 	}
 	
 	private func configureDataSource() {
@@ -103,6 +108,26 @@ class SubscriptionListViewController: UITableViewController {
 		present(alert, animated: true)
 	}
 	
+	private func unsubscribe(from topic: String) {
+		Messaging.messaging().unsubscribe(fromTopic: topic) { [weak self] error in
+			guard let self = self else { return }
+			
+			if let error = error {
+				#if DEBUG
+				print("\(type(of: self)).\(#function): Error unsubscribing from topic '\(topic)': \(error.localizedDescription)")
+				#endif
+			} else {
+				#if DEBUG
+				print("Successfully subscribed to topic '\(topic)'.")
+				#endif
+				if var actualTopics = UserDefaults.standard.stringArray(forKey: "topicSubscriptions") {
+					actualTopics.removeAll(where: { $0 == topic })
+					UserDefaults.standard.set(actualTopics, forKey: "topicSubscriptions")
+				}
+			}
+		}
+	}
+	
 	// MARK: - UITableViewDelegate
 	
 	override func numberOfSections(in tableView: UITableView) -> Int { 1 }
@@ -123,6 +148,18 @@ class SubscriptionListViewController: UITableViewController {
 		}
 		
 		return cell
+	}
+	
+	// MARK: - UITableViewDataSource
+	
+	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+		if editingStyle == .delete {
+			unsubscribe(from: dataSource.subscriptions[indexPath.row])
+			dataSource.subscriptions.remove(at: indexPath.row)
+			tableView.deleteRows(at: [indexPath], with: .fade)
+		} else if editingStyle == .insert {
+			// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+		}
 	}
 
 }
