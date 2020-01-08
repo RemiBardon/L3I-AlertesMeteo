@@ -23,6 +23,7 @@ class AlertListViewController: UITableViewController {
 		
 		view.backgroundColor = .systemGroupedBackground
 		
+		configureAlertsButton()
 		configureDataSource()
 		configureNotificationCenter()
 	}
@@ -36,6 +37,11 @@ class AlertListViewController: UITableViewController {
 	deinit {
 		dataSource.stopListeningForNewAlerts()
 		subscriptionCanceller?.cancel()
+	}
+	
+	private func configureAlertsButton() {
+		let item = UIBarButtonItem(title: "Abonnenments", style: .plain, target: self, action: #selector(showSubscriptionList))
+		navigationItem.setRightBarButton(item, animated: false)
 	}
 	
 	private func configureNotificationCenter() {
@@ -95,6 +101,12 @@ class AlertListViewController: UITableViewController {
 					self.tableView.refreshControl?.endRefreshing()
 				}
 			}
+	}
+	
+	@objc func showSubscriptionList() {
+		#if DEBUG
+		print("\(type(of: self)).\(#function): Show subscription list")
+		#endif
 	}
 	
 	// MARK: - UITableViewDelegate
