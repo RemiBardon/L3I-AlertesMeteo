@@ -12,6 +12,7 @@ class AlertValuesTableViewCell: UITableViewCell {
 	
 	static public let reuseIdentifier = "AlertValuesTableViewCell"
 	
+	private var titleLabel: UILabel!
 	private var stackView: UIStackView!
 	
 	public var alert: Alert? {
@@ -21,14 +22,34 @@ class AlertValuesTableViewCell: UITableViewCell {
 	init() {
 		super.init(style: .default, reuseIdentifier: AlertValuesTableViewCell.reuseIdentifier)
 		
-		configure()
+		configureTitleLabel()
+		configureContent()
 	}
 	
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
 	}
 	
-	private func configure() {
+	private func configureTitleLabel() {
+		titleLabel = UILabel()
+		titleLabel.text = "Valeurs :"
+		titleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
+		titleLabel.minimumScaleFactor = 0.9
+		
+		addSubview(titleLabel)
+		
+		titleLabel.translatesAutoresizingMaskIntoConstraints = false
+		
+		titleLabel.sizeToFit()
+		
+		NSLayoutConstraint.activate([
+			titleLabel.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor),
+			titleLabel.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
+			titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: layoutMarginsGuide.trailingAnchor)
+		])
+	}
+	
+	private func configureContent() {
 		stackView = UIStackView()
 		stackView.axis = .vertical
 		stackView.spacing = 8
@@ -38,7 +59,7 @@ class AlertValuesTableViewCell: UITableViewCell {
 		stackView.translatesAutoresizingMaskIntoConstraints = false
 
 		NSLayoutConstraint.activate([
-			stackView.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor),
+			stackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
 			stackView.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor),
 			stackView.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
 			stackView.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor)
@@ -88,6 +109,12 @@ class AlertValuesTableViewCell: UITableViewCell {
 		if let latitude = alert?.latitude, let longitude = alert?.longitude {
 			let label = UILabel()
 			label.text = "Direction : (\(String(describing: latitude)), \(String(describing: longitude)))"
+			stackView.addArrangedSubview(label)
+		}
+		
+		if stackView.arrangedSubviews.isEmpty {
+			let label = UILabel()
+			label.text = "Pas de valeurs."
 			stackView.addArrangedSubview(label)
 		}
 	}
