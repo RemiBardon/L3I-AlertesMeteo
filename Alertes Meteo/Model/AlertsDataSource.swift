@@ -16,7 +16,7 @@ class AlertsDataSource: ObservableObject {
 	
 	private var alertsListener: ListenerRegistration?
 	
-	func listenForNewAlerts() {
+	func listen() {
 		// Get realtime updates with Cloud Firestore
 		// https://firebase.google.com/docs/firestore/query-data/listen
 		
@@ -69,7 +69,7 @@ class AlertsDataSource: ObservableObject {
 			}
 	}
 	
-	func stopListeningForNewAlerts() {
+	func stopListening() {
 		alertsListener?.remove()
 		alertsListener = nil
 	}

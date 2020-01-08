@@ -35,7 +35,7 @@ class AlertListViewController: UITableViewController {
 	}
 	
 	deinit {
-		dataSource.stopListeningForNewAlerts()
+		dataSource.stopListening()
 		subscriptionCanceller?.cancel()
 	}
 	
@@ -87,7 +87,7 @@ class AlertListViewController: UITableViewController {
 	}
 	
 	private func configureDataSource() {
-		dataSource.listenForNewAlerts()
+		dataSource.listen()
 		subscriptionCanceller = dataSource.$alerts
 			.receive(on: RunLoop.main)
 			.sink { [weak self] (alerts: [Alert]) in
