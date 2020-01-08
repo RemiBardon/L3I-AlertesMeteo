@@ -13,7 +13,7 @@ class AlertListViewController: UITableViewController {
 	
 	private let reuseIdentifier = "alertCell"
 	
-	private let dataSource = AlertsDataSource()
+	private let dataSource = TopicsDataSource()
 	private var subscriptionCanceller: AnyCancellable?
 	
 	override func viewDidLoad() {
@@ -88,9 +88,9 @@ class AlertListViewController: UITableViewController {
 	
 	private func configureDataSource() {
 		dataSource.listen()
-		subscriptionCanceller = dataSource.$alerts
+		subscriptionCanceller = dataSource.$topics
 			.receive(on: RunLoop.main)
-			.sink { [weak self] (alerts: [Alert]) in
+			.sink { [weak self] (topics: [(name: String, alerts: [Alert])]) in
 				guard let self = self else { return }
 
 				self.tableView.reloadData()
@@ -115,27 +115,20 @@ class AlertListViewController: UITableViewController {
 	
 	// MARK: - UITableViewDelegate
 	
-	override func numberOfSections(in tableView: UITableView) -> Int { dataSource.alerts.isEmpty ? 0 : 1 }
+	override func numberOfSections(in tableView: UITableView) -> Int { dataSource.topics.count }
 	
-	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		"Lieu \(section)"
-	}
+	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? { dataSource.topics[section].name }
 	
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { dataSource.alerts.count }
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { dataSource.topics[section].alerts.count }
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) ?? UITableViewCell(style: .subtitle, reuseIdentifier: reuseIdentifier)
 		
-		if indexPath.row < dataSource.alerts.count {
-			let alert = dataSource.alerts[indexPath.row]
-			cell.textLabel?.text = alert.levelDescription
-			cell.detailTextLabel?.text = alert.message
-		} else {
-			#if DEBUG
-			print("\(type(of: self)).\(#function): Warning: indexPath.row >= dataSource.alerts.count")
-			#endif
-			cell.textLabel?.text = "Alerte"
-		}
+		#warning("Show default message if no alert in topic")
+		
+		let alert = dataSource.topics[indexPath.section].alerts[indexPath.row]
+		cell.textLabel?.text = alert.levelDescription
+		cell.detailTextLabel?.text = alert.message
 		cell.accessoryType = .disclosureIndicator
 		
 		return cell
@@ -145,9 +138,8 @@ class AlertListViewController: UITableViewController {
 		guard let navigationController = navigationController else { return }
 		
 		let vc = AlertDetailViewController()
-		if indexPath.row < dataSource.alerts.count {
-			vc.alert = dataSource.alerts[indexPath.row]
-		}
+		vc.alert = dataSource.topics[indexPath.section].alerts[indexPath.row]
+		
 		navigationController.pushViewController(vc, animated: true)
 	}
 	
