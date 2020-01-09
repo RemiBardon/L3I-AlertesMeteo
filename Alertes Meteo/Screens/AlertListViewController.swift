@@ -12,6 +12,7 @@ import Combine
 class AlertListViewController: UITableViewController {
 	
 	private let reuseIdentifier = "alertCell"
+	private let informationCellReuseIdentifier = "informationCell"
 	
 	private let dataSource = TopicsDataSource()
 	private var subscriptionCanceller: AnyCancellable?
@@ -119,26 +120,51 @@ class AlertListViewController: UITableViewController {
 	
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? { dataSource.topics[section].name }
 	
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { dataSource.topics[section].alerts.count }
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		let count = dataSource.topics[section].alerts.count
+		return count > 0 ? count : 1
+	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) ?? UITableViewCell(style: .subtitle, reuseIdentifier: reuseIdentifier)
+		guard indexPath.section < dataSource.topics.count else { return UITableViewCell() }
 		
-		#warning("Show default message if no alert in topic")
+		let topic = dataSource.topics[indexPath.section]
 		
-		let alert = dataSource.topics[indexPath.section].alerts[indexPath.row]
+		guard indexPath.row < topic.alerts.count else {
+			let cell = tableView.dequeueReusableCell(withIdentifier: informationCellReuseIdentifier) ?? {
+				let cell = UITableViewCell(style: .default, reuseIdentifier: informationCellReuseIdentifier)
+				cell.selectionStyle = .none
+				return cell
+			}()
+			
+			cell.textLabel?.text = "Pas d'alerte"
+			
+			return cell
+		}
+		
+		let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) ?? {
+			let cell = UITableViewCell(style: .subtitle, reuseIdentifier: reuseIdentifier)
+			cell.accessoryType = .disclosureIndicator
+			return cell
+		}()
+		
+		let alert = topic.alerts[indexPath.row]
 		cell.textLabel?.text = alert.levelDescription
 		cell.detailTextLabel?.text = alert.message
-		cell.accessoryType = .disclosureIndicator
 		
 		return cell
 	}
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		guard indexPath.section < dataSource.topics.count else { return }
 		guard let navigationController = navigationController else { return }
 		
+		let topic = dataSource.topics[indexPath.section]
+		
+		guard indexPath.row < topic.alerts.count else { return }
+		
 		let vc = AlertDetailViewController()
-		vc.alert = dataSource.topics[indexPath.section].alerts[indexPath.row]
+		vc.alert = topic.alerts[indexPath.row]
 		
 		navigationController.pushViewController(vc, animated: true)
 	}
