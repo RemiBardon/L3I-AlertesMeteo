@@ -22,30 +22,21 @@ class TopicsDataSource: ObservableObject {
 	private var topicListeners = [ListenerRegistration]()
 	
 	func listen() {
-		subscriptionCanceller = subscriptionsDataSource.$subscriptions
-			.sink { [weak self] (topicSubscriptions: [String]) in
+		subscriptionCanceller = subscriptionsDataSource.subscriptionsDidChangeOrderSubject
+			.sink { [weak self] (change: (topicName: String, indexBefore: Int?, indexAfter: Int?, type: SubscriptionsDataSource.ChangeType)) in
 				guard let self = self else { return }
 				
-				// Remove unsubscribed topics
-				for topic in self.topics {
-					if !topicSubscriptions.contains(topic.name) {
-						self.topics.removeAll { $0.name == topic.name }
-						self.topicsSubject.send()
-					}
-				}
-				
-				// Get realtime updates with Cloud Firestore
-				// https://firebase.google.com/docs/firestore/query-data/listen
-				
-				let db = Firestore.firestore()
-				
-				for topicName in topicSubscriptions {
-					if !self.topics.contains(where: { $0.name == topicName }) {
-						self.topics.append(Topic(name: topicName))
-					}
+				switch change.type {
+				case .insertion:
+					// Get realtime updates with Cloud Firestore
+					// https://firebase.google.com/docs/firestore/query-data/listen
+					
+					let db = Firestore.firestore()
+					self.topics.append(Topic(name: change.topicName))
+					
 					self.topicListeners.append(
 						db.collection("alerts")
-							.whereField("topic", isEqualTo: topicName)
+							.whereField("topic", isEqualTo: change.topicName)
 							.order(by: "timestamp", descending: true)
 							.limit(to: 5)
 							.addSnapshotListener { [weak self] (querySnapshot, error) in
@@ -60,15 +51,8 @@ class TopicsDataSource: ObservableObject {
 									return
 								}
 								
-								let topicIndex: Int
-								if let index = topicSubscriptions.firstIndex(of: topicName) {
-									topicIndex = index
-								} else {
-									self.topics.append(Topic(name: topicName))
-									topicIndex = self.topics.count - 1
-								}
-								
-								let topic = self.topics[topicIndex]
+								// We cannot use change.indexAfter here because of other changes in the order that could have appened
+								guard let topic = self.topics.first(where: { $0.name == change.topicName }) else { return }
 								var alertIndexes = [String: Int]()
 								for i in 0..<topic.alerts.count {
 									alertIndexes[topic.alerts[i].id] = i
@@ -109,6 +93,16 @@ class TopicsDataSource: ObservableObject {
 								self.topicsSubject.send()
 							}
 					)
+				case .removal:
+					self.topics.remove(at: change.indexBefore!)
+					#warning("Remove listener from topicListeners")
+					self.topicsSubject.send()
+				case .move:
+					let topic = self.topics[change.indexBefore!]
+					self.topics.remove(at: change.indexBefore!)
+					#warning("Remove listener from topicListeners")
+					self.topics.insert(topic, at: change.indexAfter!)
+					self.topicsSubject.send()
 				}
 		}
 		subscriptionsDataSource.listen()

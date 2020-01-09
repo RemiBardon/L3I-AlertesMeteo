@@ -13,6 +13,7 @@ import FirebaseMessaging
 class SubscriptionListViewController: UITableViewController {
 	
 	private let reuseIdentifier = "subscriptionCell"
+	private let insertionCellReuseIdentifier = "insertionCell"
 	
 	private let dataSource = SubscriptionsDataSource()
 	private var subscriptionCanceller: AnyCancellable?
@@ -56,9 +57,9 @@ class SubscriptionListViewController: UITableViewController {
 	
 	private func configureDataSource() {
 		dataSource.listen()
-		subscriptionCanceller = dataSource.$subscriptions
+		subscriptionCanceller = dataSource.subscriptionsDidChangeSubject
 			.receive(on: RunLoop.main)
-			.sink { [weak self] (topics: [String]) in
+			.sink { [weak self] in
 				guard let self = self else { return }
 
 				self.tableView.reloadData()
@@ -170,27 +171,38 @@ class SubscriptionListViewController: UITableViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) ?? UITableViewCell(style: .default, reuseIdentifier: reuseIdentifier)
-		
 		switch indexPath.section {
 		case 0:
-			if indexPath.row < dataSource.subscriptions.count {
-				let topic = dataSource.subscriptions[indexPath.row]
-				cell.textLabel?.text = topic
+			let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) ?? {
+				let cell = UITableViewCell(style: .default, reuseIdentifier: reuseIdentifier)
 				cell.selectionStyle = .none
-			}
-		case 1:
-			cell.textLabel?.text = "Ajouter un groupe d'alertes"
-			cell.imageView?.image = UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(textStyle: .title2))
-			cell.imageView?.tintColor = .systemGreen
+				return cell
+			}()
 			
-			let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(addTopic))
-			cell.addGestureRecognizer(tapGestureRecognizer)
+			if indexPath.row < dataSource.subscriptions.count {
+				cell.textLabel?.text = dataSource.subscriptions[indexPath.row]
+			}
+			
+			return cell
+		case 1:
+			let cell = tableView.dequeueReusableCell(withIdentifier: insertionCellReuseIdentifier) ?? {
+				let cell = UITableViewCell(style: .default, reuseIdentifier: insertionCellReuseIdentifier)
+				
+				cell.imageView?.image = UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(textStyle: .title2))
+				cell.imageView?.tintColor = .systemGreen
+				
+				let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(addTopic))
+				cell.addGestureRecognizer(tapGestureRecognizer)
+				
+				return cell
+			}()
+			
+			cell.textLabel?.text = "Ajouter un groupe d'alertes"
+			
+			return cell
 		default:
-			break
+			return tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) ?? UITableViewCell(style: .default, reuseIdentifier: reuseIdentifier)
 		}
-		
-		return cell
 	}
 	
 	override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool { indexPath.section == 0 }
@@ -227,7 +239,8 @@ class SubscriptionListViewController: UITableViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-		#warning("Reorder topics")
+		let topicName = dataSource.subscriptions[sourceIndexPath.row]
+		dataSource.move(topic: topicName, from: sourceIndexPath.row, to: destinationIndexPath.row)
 	}
 
 }
