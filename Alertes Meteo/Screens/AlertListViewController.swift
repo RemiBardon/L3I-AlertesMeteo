@@ -41,7 +41,7 @@ class AlertListViewController: UITableViewController {
 	}
 	
 	private func configureNavigationBar() {
-		let item = UIBarButtonItem(title: "Abonnenments", style: .plain, target: self, action: #selector(showSubscriptionList))
+		let item = UIBarButtonItem(image: UIImage(systemName: "bell.circle.fill", withConfiguration: UIImage.SymbolConfiguration(textStyle: .title1)), style: .plain, target: self, action: #selector(showSubscriptionList))
 		navigationItem.setRightBarButton(item, animated: false)
 	}
 	
@@ -108,7 +108,7 @@ class AlertListViewController: UITableViewController {
 		#if DEBUG
 		print("\(type(of: self)).\(#function): Show subscription list")
 		#endif
-		let vc = SubscriptionListViewController(style: .plain)
+		let vc = SubscriptionListViewController(style: .insetGrouped)
 		let nc = UINavigationController(rootViewController: vc)
 		nc.modalPresentationStyle = .pageSheet
 		present(nc, animated: true)

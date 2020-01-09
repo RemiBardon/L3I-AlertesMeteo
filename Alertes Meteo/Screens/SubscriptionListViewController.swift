@@ -20,12 +20,10 @@ class SubscriptionListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		title = "Liste des abonnements"
+		title = "Abonnements"
 		
-		view.backgroundColor = .systemBackground
+		view.backgroundColor = .systemGroupedBackground
 		
-		configureNavigationBar()
-		configureTableView()
 		configureDataSource()
     }
 	
@@ -34,16 +32,26 @@ class SubscriptionListViewController: UITableViewController {
 		subscriptionCanceller?.cancel()
 	}
 	
-	private func configureNavigationBar() {
-		let leftItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(save))
-		let rightItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(add))
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
 		
-		navigationItem.setLeftBarButton(leftItem, animated: false)
-		navigationItem.setRightBarButton(rightItem, animated: false)
+		configureNavigationBar()
 	}
 	
-	private func configureTableView() {
-		tableView.allowsSelection = false
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		
+		endEditing()
+	}
+		
+	private func configureNavigationBar() {
+		navigationController?.navigationBar.prefersLargeTitles = false
+
+		let leftItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(save))
+		navigationItem.setLeftBarButton(leftItem, animated: true)
+		
+		let rightItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
+		navigationItem.setRightBarButton(rightItem, animated: true)
 	}
 	
 	private func configureDataSource() {
@@ -63,6 +71,28 @@ class SubscriptionListViewController: UITableViewController {
 			}
 	}
 	
+	@objc private func edit() {
+		#if DEBUG
+		print("\(type(of: self)).\(#function): Edit")
+		#endif
+		
+		tableView.setEditing(true, animated: true)
+		
+		let rightItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(endEditing))
+		navigationItem.setRightBarButton(rightItem, animated: true)
+	}
+	
+	@objc private func endEditing() {
+		#if DEBUG
+		print("\(type(of: self)).\(#function): Stop editing")
+		#endif
+		
+		tableView.setEditing(false, animated: true)
+		
+		let rightItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
+		navigationItem.setRightBarButton(rightItem, animated: true)
+	}
+	
 	@objc private func save() {
 		#if DEBUG
 		print("\(type(of: self)).\(#function): Dismiss")
@@ -70,7 +100,7 @@ class SubscriptionListViewController: UITableViewController {
 		dismiss(animated: true)
 	}
 	
-	@objc private func add() {
+	@objc private func addTopic() {
 		#if DEBUG
 		print("\(type(of: self)).\(#function): Add topic")
 		#endif
@@ -126,24 +156,52 @@ class SubscriptionListViewController: UITableViewController {
 	
 	// MARK: - UITableViewDelegate
 	
-	override func numberOfSections(in tableView: UITableView) -> Int { 1 }
+	override func numberOfSections(in tableView: UITableView) -> Int { 2 }
 	
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { dataSource.subscriptions.count }
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		switch section {
+		case 0:
+			return dataSource.subscriptions.count
+		case 1:
+			return 1
+		default:
+			return 0
+		}
+	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) ?? UITableViewCell(style: .default, reuseIdentifier: reuseIdentifier)
 		
-		if indexPath.row < dataSource.subscriptions.count {
-			let topic = dataSource.subscriptions[indexPath.row]
-			cell.textLabel?.text = topic
-		} else {
-			#if DEBUG
-			print("\(type(of: self)).\(#function): Warning: indexPath.row >= dataSource.subscriptions.count")
-			#endif
-			cell.textLabel?.text = "Topic"
+		switch indexPath.section {
+		case 0:
+			if indexPath.row < dataSource.subscriptions.count {
+				let topic = dataSource.subscriptions[indexPath.row]
+				cell.textLabel?.text = topic
+				cell.selectionStyle = .none
+			}
+		case 1:
+			cell.textLabel?.text = "Ajouter un groupe d'alertes"
+			cell.imageView?.image = UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(textStyle: .title2))
+			cell.imageView?.tintColor = .systemGreen
+			
+			let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(addTopic))
+			cell.addGestureRecognizer(tapGestureRecognizer)
+		default:
+			break
 		}
 		
 		return cell
+	}
+	
+	override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool { indexPath.section == 0 }
+	
+	override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+		switch indexPath.section {
+		case 0:
+			return .delete
+		default:
+			return .none
+		}
 	}
 	
 	// MARK: - UITableViewDataSource
@@ -156,6 +214,20 @@ class SubscriptionListViewController: UITableViewController {
 		} else if editingStyle == .insert {
 			// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
 		}
+	}
+	
+	override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool { indexPath.section == 0 }
+	
+	override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+		if proposedDestinationIndexPath.section > 0 {
+			return IndexPath(row: dataSource.subscriptions.count - 1, section: 0)
+		} else {
+			return proposedDestinationIndexPath
+		}
+	}
+	
+	override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+		#warning("Reorder topics")
 	}
 
 }
