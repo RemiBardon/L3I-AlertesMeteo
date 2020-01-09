@@ -26,33 +26,12 @@ class SubscriptionListViewController: UITableViewController {
 		view.backgroundColor = .systemGroupedBackground
 		
 		configureDataSource()
+		configureTableView()
     }
 	
 	deinit {
 		dataSource.stopListening()
 		subscriptionCanceller?.cancel()
-	}
-	
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		
-		configureNavigationBar()
-	}
-	
-	override func viewWillDisappear(_ animated: Bool) {
-		super.viewWillDisappear(animated)
-		
-		endEditing()
-	}
-		
-	private func configureNavigationBar() {
-		navigationController?.navigationBar.prefersLargeTitles = false
-
-		let leftItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(save))
-		navigationItem.setLeftBarButton(leftItem, animated: true)
-		
-		let rightItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
-		navigationItem.setRightBarButton(rightItem, animated: true)
 	}
 	
 	private func configureDataSource() {
@@ -72,26 +51,8 @@ class SubscriptionListViewController: UITableViewController {
 			}
 	}
 	
-	@objc private func edit() {
-		#if DEBUG
-		print("\(type(of: self)).\(#function): Edit")
-		#endif
-		
-		tableView.setEditing(true, animated: true)
-		
-		let rightItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(endEditing))
-		navigationItem.setRightBarButton(rightItem, animated: true)
-	}
-	
-	@objc private func endEditing() {
-		#if DEBUG
-		print("\(type(of: self)).\(#function): Stop editing")
-		#endif
-		
-		tableView.setEditing(false, animated: true)
-		
-		let rightItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
-		navigationItem.setRightBarButton(rightItem, animated: true)
+	private func configureTableView() {
+		tableView.setEditing(true, animated: false)
 	}
 	
 	@objc private func save() {
@@ -188,9 +149,6 @@ class SubscriptionListViewController: UITableViewController {
 			let cell = tableView.dequeueReusableCell(withIdentifier: insertionCellReuseIdentifier) ?? {
 				let cell = UITableViewCell(style: .default, reuseIdentifier: insertionCellReuseIdentifier)
 				
-				cell.imageView?.image = UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(textStyle: .title2))
-				cell.imageView?.tintColor = .systemGreen
-				
 				let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(addTopic))
 				cell.addGestureRecognizer(tapGestureRecognizer)
 				
@@ -211,6 +169,8 @@ class SubscriptionListViewController: UITableViewController {
 		switch indexPath.section {
 		case 0:
 			return .delete
+		case 1:
+			return .insert
 		default:
 			return .none
 		}
@@ -224,11 +184,11 @@ class SubscriptionListViewController: UITableViewController {
 			dataSource.subscriptions.remove(at: indexPath.row)
 			tableView.deleteRows(at: [indexPath], with: .fade)
 		} else if editingStyle == .insert {
-			// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+			addTopic()
 		}
 	}
 	
-	override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool { indexPath.section == 0 }
+	override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool { indexPath.section == 0 && dataSource.subscriptions.count > 1 }
 	
 	override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
 		if proposedDestinationIndexPath.section > 0 {
