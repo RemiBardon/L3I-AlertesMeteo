@@ -38,7 +38,7 @@ class TopicsDataSource: ObservableObject {
 						db.collection("alerts")
 							.whereField("topic", isEqualTo: change.topicName)
 							.order(by: "timestamp", descending: true)
-							.limit(to: 5)
+							.limit(to: 20)
 							.addSnapshotListener { [weak self] (querySnapshot, error) in
 								guard let self = self else { return }
 								

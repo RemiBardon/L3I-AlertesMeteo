@@ -26,6 +26,7 @@
 		57E0153123C5FD3500AF1143 /* TopicsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E0153023C5FD3500AF1143 /* TopicsDataSource.swift */; };
 		57EFFCC823C0DE9500BFBCBA /* AlertListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EFFCC723C0DE9500BFBCBA /* AlertListViewController.swift */; };
 		57EFFCD123C0EE9A00BFBCBA /* AlertDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EFFCD023C0EE9A00BFBCBA /* AlertDetailViewController.swift */; };
+		57F23E3723C7C7AE006B9D73 /* TableViewHeaderWithButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F23E3623C7C7AE006B9D73 /* TableViewHeaderWithButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		57E0153023C5FD3500AF1143 /* TopicsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicsDataSource.swift; sourceTree = "<group>"; };
 		57EFFCC723C0DE9500BFBCBA /* AlertListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertListViewController.swift; sourceTree = "<group>"; };
 		57EFFCD023C0EE9A00BFBCBA /* AlertDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDetailViewController.swift; sourceTree = "<group>"; };
+		57F23E3623C7C7AE006B9D73 /* TableViewHeaderWithButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewHeaderWithButton.swift; sourceTree = "<group>"; };
 		F03F31610E41B813F9474CA6 /* Pods_Alertes_Meteo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Alertes_Meteo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4FD6FCCA5EB1CD178EE02D4 /* Pods-Alertes Meteo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Alertes Meteo.release.xcconfig"; path = "Target Support Files/Pods-Alertes Meteo/Pods-Alertes Meteo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -126,6 +128,7 @@
 		57EFFCCC23C0ED6000BFBCBA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				57F23E3523C7C77D006B9D73 /* Headers */,
 				5744CFD123C497CD000ECA2A /* Cells */,
 			);
 			path = Views;
@@ -164,6 +167,14 @@
 				57CC11A823C5E5E800F8CC99 /* SubscriptionsDataSource.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		57F23E3523C7C77D006B9D73 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				57F23E3623C7C7AE006B9D73 /* TableViewHeaderWithButton.swift */,
+			);
+			path = Headers;
 			sourceTree = "<group>";
 		};
 		C060293D0C4FC8DDA2737835 /* Frameworks */ = {
@@ -302,6 +313,7 @@
 				57CC11A723C5E40000F8CC99 /* SubscriptionListViewController.swift in Sources */,
 				570CA5DA23C0F45300BB3F77 /* Alert.swift in Sources */,
 				57EFFCD123C0EE9A00BFBCBA /* AlertDetailViewController.swift in Sources */,
+				57F23E3723C7C7AE006B9D73 /* TableViewHeaderWithButton.swift in Sources */,
 				57CC11A923C5E5E800F8CC99 /* SubscriptionsDataSource.swift in Sources */,
 				57E0153123C5FD3500AF1143 /* TopicsDataSource.swift in Sources */,
 				570CA5DF23C13ABF00BB3F77 /* Foundation+Ext.swift in Sources */,

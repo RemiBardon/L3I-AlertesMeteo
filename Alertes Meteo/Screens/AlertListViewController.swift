@@ -13,6 +13,7 @@ class AlertListViewController: UITableViewController {
 	
 	private let reuseIdentifier = "alertCell"
 	private let informationCellReuseIdentifier = "informationCell"
+	private let headerReuseIdentifier = "header"
 	
 	private let dataSource = TopicsDataSource()
 	private var subscriptionCanceller: AnyCancellable?
@@ -122,7 +123,13 @@ class AlertListViewController: UITableViewController {
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		let count = dataSource.topics[section].alerts.count
-		return count > 0 ? count : 1
+		if count < 1 {
+			return 1
+		} else if count > 5 {
+			return 5
+		} else {
+			return count
+		}
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -168,5 +175,25 @@ class AlertListViewController: UITableViewController {
 		
 		navigationController.pushViewController(vc, animated: true)
 	}
+	
+	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerReuseIdentifier) as? TableViewHeaderWithButton ?? TableViewHeaderWithButton(reuseIdentifier: headerReuseIdentifier)
+
+		if dataSource.topics[section].alerts.count > self.tableView(tableView, numberOfRowsInSection: section) {
+			view.buttonTitle = "Voir tout"
+			view.buttonAction = {
+				let vc = AlertListViewController(style: .insetGrouped)
+				vc.title = ""
+				self.navigationController?.pushViewController(vc, animated: true)
+			}
+		} else {
+			view.buttonTitle = nil
+			view.buttonAction = nil
+		}
+
+		return view
+	}
+	
+	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { section == 0 ? 56 : 40 }
 	
 }
