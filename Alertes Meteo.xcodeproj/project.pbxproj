@@ -20,6 +20,7 @@
 		570CA5DF23C13ABF00BB3F77 /* Foundation+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570CA5DE23C13ABF00BB3F77 /* Foundation+Ext.swift */; };
 		5744CFD323C497F4000ECA2A /* AlertMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5744CFD223C497F4000ECA2A /* AlertMessageTableViewCell.swift */; };
 		5744CFD523C4A026000ECA2A /* AlertValuesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5744CFD423C4A026000ECA2A /* AlertValuesTableViewCell.swift */; };
+		574ED19523CD110100FD7AB1 /* rfc3339.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574ED19423CD110100FD7AB1 /* rfc3339.swift */; };
 		57A7DDA623C68EBA00031F8E /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A7DDA523C68EB900031F8E /* Topic.swift */; };
 		57CC11A723C5E40000F8CC99 /* SubscriptionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CC11A623C5E40000F8CC99 /* SubscriptionListViewController.swift */; };
 		57CC11A923C5E5E800F8CC99 /* SubscriptionsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CC11A823C5E5E800F8CC99 /* SubscriptionsDataSource.swift */; };
@@ -45,6 +46,7 @@
 		570CA5DE23C13ABF00BB3F77 /* Foundation+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Ext.swift"; sourceTree = "<group>"; };
 		5744CFD223C497F4000ECA2A /* AlertMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertMessageTableViewCell.swift; sourceTree = "<group>"; };
 		5744CFD423C4A026000ECA2A /* AlertValuesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertValuesTableViewCell.swift; sourceTree = "<group>"; };
+		574ED19423CD110100FD7AB1 /* rfc3339.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rfc3339.swift; sourceTree = "<group>"; };
 		57A7DDA523C68EB900031F8E /* Topic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
 		57CC11A623C5E40000F8CC99 /* SubscriptionListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionListViewController.swift; sourceTree = "<group>"; };
 		57CC11A823C5E5E800F8CC99 /* SubscriptionsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsDataSource.swift; sourceTree = "<group>"; };
@@ -125,6 +127,14 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		574ED19323CD10E400FD7AB1 /* RFC 3339 */ = {
+			isa = PBXGroup;
+			children = (
+				574ED19423CD110100FD7AB1 /* rfc3339.swift */,
+			);
+			path = "RFC 3339";
+			sourceTree = "<group>";
+		};
 		57EFFCCC23C0ED6000BFBCBA /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -160,6 +170,7 @@
 		57EFFCCF23C0EE3100BFBCBA /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				574ED19323CD10E400FD7AB1 /* RFC 3339 */,
 				57A7DDA523C68EB900031F8E /* Topic.swift */,
 				570CA5D923C0F45300BB3F77 /* Alert.swift */,
 				57E0153023C5FD3500AF1143 /* TopicsDataSource.swift */,
@@ -315,6 +326,7 @@
 				57EFFCD123C0EE9A00BFBCBA /* AlertDetailViewController.swift in Sources */,
 				57F23E3723C7C7AE006B9D73 /* TableViewHeaderWithButton.swift in Sources */,
 				57CC11A923C5E5E800F8CC99 /* SubscriptionsDataSource.swift in Sources */,
+				574ED19523CD110100FD7AB1 /* rfc3339.swift in Sources */,
 				57E0153123C5FD3500AF1143 /* TopicsDataSource.swift in Sources */,
 				570CA5DF23C13ABF00BB3F77 /* Foundation+Ext.swift in Sources */,
 				5744CFD323C497F4000ECA2A /* AlertMessageTableViewCell.swift in Sources */,

@@ -12,6 +12,7 @@ struct Alert: Decodable {
 	
 	let id: String
 	let timestamp: String
+	let date: Date?
 	let level: String
 	let topic: String
 	let message: String?
@@ -44,6 +45,7 @@ struct Alert: Decodable {
 		let container 	= try decoder.container(keyedBy: CodingKeys.self)
 		id 				= try container.decode(String.self, forKey: .id)
 		timestamp 		= try container.decode(String.self, forKey: .timestamp)
+		date 			= dateForRFC3339DateTimeString(timestamp)
 		level 			= try container.decode(String.self, forKey: .level)
 		topic 			= try container.decode(String.self, forKey: .topic)
 		message 		= try container.decodeIfPresent(String.self, forKey: .message)

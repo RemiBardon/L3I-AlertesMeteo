@@ -157,7 +157,7 @@ class AlertListViewController: UITableViewController {
 		
 		let alert = topic.alerts[indexPath.row]
 		cell.textLabel?.text = alert.levelDescription
-		cell.detailTextLabel?.text = alert.message
+		cell.detailTextLabel?.text = alert.date?.timeAgoDisplay() ?? alert.timestamp
 		
 		return cell
 	}
