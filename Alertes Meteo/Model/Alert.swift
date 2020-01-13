@@ -27,14 +27,16 @@ struct Alert: Decodable {
 	
 	var levelDescription: String {
 		switch level {
+		case "OK":
+			return "✅ Retour à la normale"
 		case "INFO":
-			return "Information"
-		case "CRITICAL":
-			return "Alerte critique"
+			return "ℹ️ Information"
 		case "WARNING":
-			return "Avertissement"
+			return "⚠️ Avertissement"
+		case "CRITICAL":
+			return "🚨 Alerte critique"
 		default:
-			return "Alerte"
+			return "📢 Alerte"
 		}
 	}
 	
