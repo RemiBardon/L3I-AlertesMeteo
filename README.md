@@ -1,6 +1,7 @@
 # Projet tutoré : Alertes météo
 
 ![Cocoapods](https://img.shields.io/cocoapods/v/FirebaseFirestore?label=Firestore)
+[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/RemiBardon/L3I-AlertesMeteo/LICENSE)
 
 ## Description
 
@@ -37,3 +38,7 @@ Suivez ces instructions pour télécharger une copie de ce projet sur votre mach
 * [**Rémi Bardon**](https://github.com/RemiBardon) @RemiBardon - *Développement de l'application et du projet Firebase*
 
 Voir aussi la liste des [contributeurs](https://github.com/RemiBardon/L3I-AlertesMeteo/graphs/contributors) qui ont participé à ce projet.
+
+### Licence
+
+Ce projet est protégé par la licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
