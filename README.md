@@ -1,7 +1,8 @@
 # Projet tutoré : Alertes météo
 
-![Cocoapods](https://img.shields.io/cocoapods/v/FirebaseFirestore?label=Firestore)
 [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/RemiBardon/L3I-AlertesMeteo/LICENSE)
+![Platform](https://img.shields.io/static/v1?label=platform&message=iOS&color=lightgrey)
+![iOS version](https://img.shields.io/static/v1?label=iOS&message=13&color=informational)
 
 ## Description
 
@@ -32,6 +33,15 @@ Suivez ces instructions pour télécharger une copie de ce projet sur votre mach
 
 * XCode 11
 * Swift 5
+
+## Dépendances
+
+### Cocoapods
+
+![FirebaseFirestore version](https://img.shields.io/static/v1?label=Firebase/Firestore&message=v1.8.3&color=informational)
+![FirebaseFunctions version](https://img.shields.io/static/v1?label=Firebase/Functions&message=v2.5.1&color=informational)
+![FirebaseMessaging version](https://img.shields.io/static/v1?label=Firebase/Messaging&message=v4.1.10&color=informational)
+![FirebaseInAppMessaging version](https://img.shields.io/static/v1?label=Firebase/InAppMessaging&message=v0.15.6&color=important)
 
 ## Auteurs
 
