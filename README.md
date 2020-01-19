@@ -2,7 +2,8 @@
 
 [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/RemiBardon/L3I-AlertesMeteo/LICENSE)
 ![Platform](https://img.shields.io/static/v1?label=platform&message=iOS&color=lightgrey)
-![iOS version](https://img.shields.io/static/v1?label=iOS&message=13&color=informational)
+![Language](https://img.shields.io/static/v1?label=language&message=Swift&color=orange)
+![iOS version](https://img.shields.io/static/v1?label=iOS&message=13.0&color=informational)
 
 ## Description
 
@@ -31,8 +32,8 @@ Suivez ces instructions pour télécharger une copie de ce projet sur votre mach
 
 #### Prérequis
 
-* XCode 11
-* Swift 5
+* XCode 11.0
+* Swift 5.0
 
 ## Dépendances
 
