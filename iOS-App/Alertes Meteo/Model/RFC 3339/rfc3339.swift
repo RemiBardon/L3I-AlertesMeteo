@@ -31,7 +31,9 @@ private func getThreadLocalRFC3339DateFormatter() -> DateFormatter {
         let en_US_POSIX = Locale(identifier: "en_US_POSIX")
 		let rfc3339DateFormatter = DateFormatter()
 		rfc3339DateFormatter.locale = en_US_POSIX
-        rfc3339DateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.SSSSSSSSXXX" // Edit: Changed "ssXXX" for "ss.SSSSSSSSXXX" because we have nanoseconds input
+        rfc3339DateFormatter.dateFormat = "yyyy'-'MM'-'dd' 'HH':'mm':'ss.SSSSSS"
+		// Edit: Changed "ssXXX" for "ss.SSSSSSSSXXX" because we have nanoseconds input
+		// Edit: Changed "T" for " " because we have a space
 		rfc3339DateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         return rfc3339DateFormatter
     }

@@ -53,10 +53,6 @@ class TopicsDataSource: ObservableObject {
 								
 								// We cannot use change.indexAfter here because of other changes in the order that could have appened
 								guard let topic = self.topics.first(where: { $0.name == change.topicName }) else { return }
-								var alertIndexes = [String: Int]()
-								for i in 0..<topic.alerts.count {
-									alertIndexes[topic.alerts[i].id] = i
-								}
 								
 								for diff in querySnapshot.documentChanges {
 									#if DEBUG
@@ -74,9 +70,10 @@ class TopicsDataSource: ObservableObject {
 									let data = diff.document.prepareForDecoding()
 									guard let newAlert = try? JSONDecoder().decode(Alert.self, fromJSONObject: data) else { continue }
 									
+									let existingIndex = topic.alerts.firstIndex { $0.id == newAlert.id }
 									switch diff.type {
 									case .added, .modified:
-										if let index = alertIndexes[newAlert.id] {
+										if let index = existingIndex {
 											topic.alerts[index] = newAlert
 										} else if let index = topic.alerts.firstIndex(where: { newAlert.timestamp > $0.timestamp }) {
 											topic.alerts.insert(newAlert, at: index)
@@ -84,7 +81,8 @@ class TopicsDataSource: ObservableObject {
 											topic.alerts.append(newAlert)
 										}
 									case .removed:
-										if let index = alertIndexes[newAlert.id] {
+										if let index = existingIndex {
+											#warning("'Fatal error: Index out of range' when deleting a collection")
 											topic.alerts.remove(at: index)
 										}
 									}
