@@ -49,6 +49,6 @@ Suivez ces instructions pour télécharger une copie de ce projet sur votre mach
 
 Voir aussi la liste des [contributeurs](https://github.com/RemiBardon/L3I-AlertesMeteo/graphs/contributors) qui ont participé à ce projet.
 
-### Licence
+## Licence
 
 Ce projet est protégé par la licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
