@@ -26,31 +26,35 @@ class AlertsDataSource: ObservableObject {
 			.limit(to: 20)
 			.addSnapshotListener { (querySnapshot, error) in
 				if let error = error {
+					#if DEBUG
 					print("Error retreiving collection: \(error)")
+					#endif
 					return
 				}
 				guard let querySnapshot = querySnapshot else {
+					#if DEBUG
 					print("Error fetching documents: querySnapshot=nil")
+					#endif
 					return
 				}
 				
 				for diff in querySnapshot.documentChanges {
-					#if DEBUG
-					switch diff.type {
-					case .added:
-						print("New alert: ", terminator: "")
-					case .modified:
-						print("Modified alert: ", terminator: "")
-					case .removed:
-						print("Removed alert: ", terminator: "")
-					}
-					print(String(describing: diff.document.data()))
-					#endif
+//					#if DEBUG
+//					switch diff.type {
+//					case .added:
+//						print("New alert: ", terminator: "")
+//					case .modified:
+//						print("Modified alert: ", terminator: "")
+//					case .removed:
+//						print("Removed alert: ", terminator: "")
+//					}
+//					print(String(describing: diff.document.data()))
+//					#endif
 					
 					let data = diff.document.prepareForDecoding()
 					guard let newAlert = try? JSONDecoder().decode(Alert.self, fromJSONObject: data) else { continue }
 					
-					let existingIndex = self.alerts.firstIndex(where: { $0.id == newAlert.id })
+					let existingIndex = self.alerts.firstIndex(of: newAlert)
 					switch diff.type {
 					case .added, .modified:
 						if let index = existingIndex {

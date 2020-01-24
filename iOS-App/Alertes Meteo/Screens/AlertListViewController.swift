@@ -7,16 +7,12 @@
 //
 
 import UIKit
-import Combine
 
 class AlertListViewController: UITableViewController {
 	
 	private let reuseIdentifier = "alertCell"
-	private let informationCellReuseIdentifier = "informationCell"
-	private let headerReuseIdentifier = "header"
 	
-	private let dataSource = TopicsDataSource()
-	private var subscriptionCanceller: AnyCancellable?
+	private var dataSource: TopicsTableViewDataSource!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -36,13 +32,16 @@ class AlertListViewController: UITableViewController {
 		navigationController?.navigationBar.prefersLargeTitles = true
 	}
 	
-	deinit {
-		dataSource.stopListening()
-		subscriptionCanceller?.cancel()
-	}
-	
 	private func configureNavigationBar() {
-		let item = UIBarButtonItem(image: UIImage(systemName: "bell.circle.fill", withConfiguration: UIImage.SymbolConfiguration(textStyle: .title1)), style: .plain, target: self, action: #selector(showSubscriptionList))
+		let item = UIBarButtonItem(
+			image: UIImage(
+				systemName: "bell.circle.fill",
+				withConfiguration: UIImage.SymbolConfiguration(textStyle: .title1)
+			),
+			style: .plain,
+			target: self,
+			action: #selector(showSubscriptionList)
+		)
 		navigationItem.setRightBarButton(item, animated: false)
 	}
 	
@@ -88,22 +87,20 @@ class AlertListViewController: UITableViewController {
 		}
 	}
 	
-	private func configureDataSource() {
-		dataSource.listen()
-		subscriptionCanceller = dataSource.topicsSubject
-			.receive(on: RunLoop.main)
-			.sink { [weak self] in
-				guard let self = self else { return }
-
-				self.tableView.reloadData()
-				
-				// Dismiss the refresh control.
-				DispatchQueue.main.async { [weak self] in
-					guard let self = self else { return }
-					self.tableView.refreshControl?.endRefreshing()
-				}
-			}
-	}
+    private func configureDataSource() {
+        dataSource = TopicsTableViewDataSource(tableView: tableView) { (tableView, indexPath, alert) -> UITableViewCell? in
+			let cell = tableView.dequeueReusableCell(withIdentifier: self.reuseIdentifier) ?? {
+				let cell = UITableViewCell(style: .subtitle, reuseIdentifier: self.reuseIdentifier)
+				cell.accessoryType = .disclosureIndicator
+				return cell
+			}()
+			
+			cell.textLabel?.text = alert.levelDescription
+			cell.detailTextLabel?.text = alert.date?.timeAgoDisplay() ?? alert.timestamp
+			
+			return cell
+        }
+    }
 	
 	@objc private func showSubscriptionList() {
 		#if DEBUG
@@ -117,83 +114,20 @@ class AlertListViewController: UITableViewController {
 	
 	// MARK: - UITableViewDelegate
 	
-	override func numberOfSections(in tableView: UITableView) -> Int { dataSource.topics.count }
-	
-	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? { dataSource.topics[section].name }
-	
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		let count = dataSource.topics[section].alerts.count
-		if count < 1 {
-			return 1
-		} else if count > 5 {
-			return 5
-		} else {
-			return count
-		}
-	}
-	
-	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard indexPath.section < dataSource.topics.count else { return UITableViewCell() }
-		
-		let topic = dataSource.topics[indexPath.section]
-		
-		guard indexPath.row < topic.alerts.count else {
-			let cell = tableView.dequeueReusableCell(withIdentifier: informationCellReuseIdentifier) ?? {
-				let cell = UITableViewCell(style: .default, reuseIdentifier: informationCellReuseIdentifier)
-				cell.selectionStyle = .none
-				return cell
-			}()
-			
-			cell.textLabel?.text = "Pas d'alerte"
-			
-			return cell
-		}
-		
-		let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) ?? {
-			let cell = UITableViewCell(style: .subtitle, reuseIdentifier: reuseIdentifier)
-			cell.accessoryType = .disclosureIndicator
-			return cell
-		}()
-		
-		let alert = topic.alerts[indexPath.row]
-		cell.textLabel?.text = alert.levelDescription
-		cell.detailTextLabel?.text = alert.date?.timeAgoDisplay() ?? alert.timestamp
-		
-		return cell
-	}
-	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		guard indexPath.section < dataSource.topics.count else { return }
 		guard let navigationController = navigationController else { return }
+		guard indexPath.section < dataSource.topics.count else { return }
 		
 		let topic = dataSource.topics[indexPath.section]
 		
 		guard indexPath.row < topic.alerts.count else { return }
 		
+		let alert = topic.alerts[indexPath.row]
+		
 		let vc = AlertDetailViewController()
-		vc.alert = topic.alerts[indexPath.row]
+		vc.alert = alert
 		
 		navigationController.pushViewController(vc, animated: true)
 	}
-	
-	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerReuseIdentifier) as? TableViewHeaderWithButton ?? TableViewHeaderWithButton(reuseIdentifier: headerReuseIdentifier)
-
-		if dataSource.topics[section].alerts.count > self.tableView(tableView, numberOfRowsInSection: section) {
-			view.buttonTitle = "Voir tout"
-			view.buttonAction = {
-				let vc = AlertListViewController(style: .insetGrouped)
-				vc.title = ""
-				self.navigationController?.pushViewController(vc, animated: true)
-			}
-		} else {
-			view.buttonTitle = nil
-			view.buttonAction = nil
-		}
-
-		return view
-	}
-	
-	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { section == 0 ? 56 : 40 }
 	
 }

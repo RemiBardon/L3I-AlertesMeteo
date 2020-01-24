@@ -36,9 +36,9 @@ class SubscriptionListViewController: UITableViewController {
 	
 	private func configureDataSource() {
 		dataSource.listen()
-		subscriptionCanceller = dataSource.subscriptionsDidChangeSubject
+		subscriptionCanceller = dataSource.$subscriptions
 			.receive(on: RunLoop.main)
-			.sink { [weak self] in
+			.sink { [weak self] (subscriptions: [String]) in
 				guard let self = self else { return }
 
 				self.tableView.reloadData()

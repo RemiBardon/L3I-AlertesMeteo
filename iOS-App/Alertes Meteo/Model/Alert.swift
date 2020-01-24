@@ -8,9 +8,10 @@
 
 import Foundation
 
-struct Alert: Decodable {
+struct Alert: Decodable, Identifiable, Hashable {
 	
-	let id: String
+	let id = UUID()
+	let alertId: String
 	let timestamp: String
 	let date: Date?
 	let level: String
@@ -43,7 +44,7 @@ struct Alert: Decodable {
 	
 	init(from decoder: Decoder) throws {
 		let container 	= try decoder.container(keyedBy: CodingKeys.self)
-		id 				= try container.decode(String.self, forKey: .id)
+		alertId 				= try container.decode(String.self, forKey: .id)
 		timestamp 		= try container.decode(String.self, forKey: .timestamp)
 		date 			= dateForRFC3339DateTimeString(timestamp)
 		level 			= try container.decode(String.self, forKey: .level)

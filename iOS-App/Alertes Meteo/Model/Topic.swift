@@ -8,7 +8,7 @@
 
 import Combine
 
-class Topic {
+class Topic: Hashable {
 	
 	let name: String
 	var alerts = [Alert]()
@@ -16,5 +16,13 @@ class Topic {
 	init(name: String) {
 		self.name = name
 	}
+	
+	// MARK: Equatable Requirements
+	
+	static func == (lhs: Topic, rhs: Topic) -> Bool { lhs.name == rhs.name }
+	
+	// MARK: Hashable Requirements
+	
+	func hash(into hasher: inout Hasher) { hasher.combine(name) }
 	
 }
