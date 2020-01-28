@@ -7,12 +7,23 @@
 //
 
 import FirebaseFirestore
+import FirebaseDatabase
 
 extension QueryDocumentSnapshot {
 
     func prepareForDecoding() -> [String: Any] {
         var data = self.data()
         data["documentId"] = documentID
+        return data
+    }
+
+}
+
+extension DataSnapshot {
+
+    func prepareForDecoding() -> [String: Any] {
+		var data = value as? [String : Any] ?? [:]
+        data["key"] = key
         return data
     }
 

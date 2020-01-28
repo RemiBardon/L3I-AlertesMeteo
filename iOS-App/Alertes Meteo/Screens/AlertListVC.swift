@@ -1,5 +1,5 @@
 //
-//  AlertListViewController.swift
+//  AlertListVC.swift
 //  Alertes Meteo
 //
 //  Created by BARDON Rémi on 04/01/2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AlertListViewController: UITableViewController {
+class AlertListVC: UITableViewController {
 	
 	private let reuseIdentifier = "alertCell"
 	
@@ -16,8 +16,6 @@ class AlertListViewController: UITableViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
-		title = "Alertes météo"
 		
 		view.backgroundColor = .systemGroupedBackground
 		
@@ -106,7 +104,7 @@ class AlertListViewController: UITableViewController {
 		#if DEBUG
 		print("\(type(of: self)).\(#function): Show subscription list")
 		#endif
-		let vc = SubscriptionListViewController(style: .insetGrouped)
+		let vc = SubscriptionListVC(style: .insetGrouped)
 		let nc = UINavigationController(rootViewController: vc)
 		nc.modalPresentationStyle = .pageSheet
 		present(nc, animated: true)
@@ -124,7 +122,7 @@ class AlertListViewController: UITableViewController {
 		
 		let alert = topic.alerts[indexPath.row]
 		
-		let vc = AlertDetailViewController()
+		let vc = AlertDetailVC()
 		vc.alert = alert
 		
 		navigationController.pushViewController(vc, animated: true)

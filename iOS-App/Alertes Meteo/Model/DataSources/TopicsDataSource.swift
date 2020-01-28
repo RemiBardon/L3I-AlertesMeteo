@@ -60,17 +60,17 @@ class TopicsDataSource: ObservableObject {
 							guard let topic = self.topics.first(where: { $0.name == topicName }) else { return }
 
 							for diff in querySnapshot.documentChanges {
-								#if DEBUG
-								switch diff.type {
-								case .added:
-									print("\(type(of: self)).\(#function): New alert: ", terminator: "")
-								case .modified:
-									print("\(type(of: self)).\(#function): Modified alert: ", terminator: "")
-								case .removed:
-									print("\(type(of: self)).\(#function): Removed alert: ", terminator: "")
-								}
-								print(String(describing: diff.document.data()))
-								#endif
+//								#if DEBUG
+//								switch diff.type {
+//								case .added:
+//									print("\(type(of: self)).\(#function): New alert: ", terminator: "")
+//								case .modified:
+//									print("\(type(of: self)).\(#function): Modified alert: ", terminator: "")
+//								case .removed:
+//									print("\(type(of: self)).\(#function): Removed alert: ", terminator: "")
+//								}
+//								print(String(describing: diff.document.data()))
+//								#endif
 
 								let data = diff.document.prepareForDecoding()
 								guard let newAlert = try? JSONDecoder().decode(Alert.self, fromJSONObject: data) else { continue }

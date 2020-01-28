@@ -1,5 +1,5 @@
 //
-//  AlertDetailViewController.swift
+//  AlertDetailVC.swift
 //  Alertes Meteo
 //
 //  Created by BARDON Rémi on 04/01/2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AlertDetailViewController: UITableViewController {
+class AlertDetailVC: UITableViewController {
 	
 	var alert: Alert?
 	

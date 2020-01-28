@@ -16,4 +16,9 @@ target 'Alertes Meteo' do
   pod 'Firebase/Database'
   pod 'Firebase/Functions'
 
+  target 'AlertesMeteoTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
 end

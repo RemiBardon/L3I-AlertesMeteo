@@ -1,5 +1,5 @@
 //
-//  SubscriptionListViewController.swift
+//  SubscriptionListVC.swift
 //  Alertes Meteo
 //
 //  Created by BARDON Rémi on 08/01/2020.
@@ -10,7 +10,7 @@ import UIKit
 import Combine
 import FirebaseMessaging
 
-class SubscriptionListViewController: UITableViewController {
+class SubscriptionListVC: UITableViewController {
 	
 	private let reuseIdentifier = "subscriptionCell"
 	private let insertionCellReuseIdentifier = "insertionCell"

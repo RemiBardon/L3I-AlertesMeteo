@@ -26,7 +26,7 @@ class AlertsTableViewDataSource: UITableViewDiffableDataSource<AlertsTableViewDa
 	
 	private func configureAlertsDataSource() {
 		alertsDataSource.listen()
-		subscriptionCanceller = alertsDataSource.$alerts
+		subscriptionCanceller = alertsDataSource.alertsSubject
 			.receive(on: RunLoop.main)
 			.sink { [weak self] (alerts: [Alert]) in
 				guard let self = self else { return }

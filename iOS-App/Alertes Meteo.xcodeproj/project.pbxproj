@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3B95799BD322F95BFE26508C /* Pods_Alertes_Meteo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F03F31610E41B813F9474CA6 /* Pods_Alertes_Meteo.framework */; };
+		5630FDD124E290DD6C745B73 /* Pods_AlertesMeteoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFB780C6BCB6A8D8C650DA5A /* Pods_AlertesMeteoTests.framework */; };
 		570526D623AB8B77008B179F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570526D523AB8B77008B179F /* AppDelegate.swift */; };
 		570526D823AB8B77008B179F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570526D723AB8B77008B179F /* SceneDelegate.swift */; };
 		570526DC23AB8B7F008B179F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 570526DB23AB8B7F008B179F /* Assets.xcassets */; };
@@ -18,19 +19,38 @@
 		570CA5DA23C0F45300BB3F77 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570CA5D923C0F45300BB3F77 /* Alert.swift */; };
 		570CA5DD23C13A2300BB3F77 /* Firebase+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570CA5DC23C13A2300BB3F77 /* Firebase+Ext.swift */; };
 		570CA5DF23C13ABF00BB3F77 /* Foundation+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570CA5DE23C13ABF00BB3F77 /* Foundation+Ext.swift */; };
+		5731DEBE23DC817D00EEDC56 /* RootTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5731DEBD23DC817D00EEDC56 /* RootTabBarVC.swift */; };
+		5731DEC023DC824500EEDC56 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5731DEBF23DC824500EEDC56 /* MapVC.swift */; };
+		5731DEC323DE1F9E00EEDC56 /* SensorLocationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5731DEC223DE1F9E00EEDC56 /* SensorLocationAnnotation.swift */; };
+		5731DEC523DE380500EEDC56 /* AlertAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5731DEC423DE380500EEDC56 /* AlertAnnotation.swift */; };
+		5731DEC823DE3B9000EEDC56 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5731DEC723DE3B9000EEDC56 /* Images.swift */; };
+		5731DED923DE3C8D00EEDC56 /* ImagesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5731DED823DE3C8D00EEDC56 /* ImagesTests.swift */; };
+		5731DEDA23DE3CA500EEDC56 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5731DEC723DE3B9000EEDC56 /* Images.swift */; };
 		5744CFD323C497F4000ECA2A /* AlertMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5744CFD223C497F4000ECA2A /* AlertMessageTableViewCell.swift */; };
 		5744CFD523C4A026000ECA2A /* AlertValuesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5744CFD423C4A026000ECA2A /* AlertValuesTableViewCell.swift */; };
 		574ED19523CD110100FD7AB1 /* rfc3339.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574ED19423CD110100FD7AB1 /* rfc3339.swift */; };
 		5758721423DA2C9300E4BA87 /* AlertsTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5758721323DA2C9300E4BA87 /* AlertsTableViewDataSource.swift */; };
+		578268A723DF190A005253BB /* FloatingControlsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578268A623DF190A005253BB /* FloatingControlsVC.swift */; };
+		578268AA23DF3060005253BB /* AMMapButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578268A923DF3060005253BB /* AMMapButton.swift */; };
 		578E230823DB77C700073DF6 /* TopicsTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578E230723DB77C700073DF6 /* TopicsTableViewDataSource.swift */; };
 		57A7DDA623C68EBA00031F8E /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A7DDA523C68EB900031F8E /* Topic.swift */; };
-		57CC11A723C5E40000F8CC99 /* SubscriptionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CC11A623C5E40000F8CC99 /* SubscriptionListViewController.swift */; };
+		57CC11A723C5E40000F8CC99 /* SubscriptionListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CC11A623C5E40000F8CC99 /* SubscriptionListVC.swift */; };
 		57CC11A923C5E5E800F8CC99 /* SubscriptionsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CC11A823C5E5E800F8CC99 /* SubscriptionsDataSource.swift */; };
 		57E0153123C5FD3500AF1143 /* TopicsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E0153023C5FD3500AF1143 /* TopicsDataSource.swift */; };
-		57EFFCC823C0DE9500BFBCBA /* AlertListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EFFCC723C0DE9500BFBCBA /* AlertListViewController.swift */; };
-		57EFFCD123C0EE9A00BFBCBA /* AlertDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EFFCD023C0EE9A00BFBCBA /* AlertDetailViewController.swift */; };
+		57EFFCC823C0DE9500BFBCBA /* AlertListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EFFCC723C0DE9500BFBCBA /* AlertListVC.swift */; };
+		57EFFCD123C0EE9A00BFBCBA /* AlertDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EFFCD023C0EE9A00BFBCBA /* AlertDetailVC.swift */; };
 		57F23E3723C7C7AE006B9D73 /* TableViewHeaderWithButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F23E3623C7C7AE006B9D73 /* TableViewHeaderWithButton.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5731DED223DE3C7800EEDC56 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 570526CA23AB8B77008B179F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 570526D123AB8B77008B179F;
+			remoteInfo = "Alertes Meteo";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		275F135C4DE0C8C9E132D95A /* Pods-Alertes Meteo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Alertes Meteo.debug.xcconfig"; path = "Target Support Files/Pods-Alertes Meteo/Pods-Alertes Meteo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -46,19 +66,32 @@
 		570CA5D923C0F45300BB3F77 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		570CA5DC23C13A2300BB3F77 /* Firebase+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Firebase+Ext.swift"; sourceTree = "<group>"; };
 		570CA5DE23C13ABF00BB3F77 /* Foundation+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Ext.swift"; sourceTree = "<group>"; };
+		5731DEBD23DC817D00EEDC56 /* RootTabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabBarVC.swift; sourceTree = "<group>"; };
+		5731DEBF23DC824500EEDC56 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
+		5731DEC223DE1F9E00EEDC56 /* SensorLocationAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorLocationAnnotation.swift; sourceTree = "<group>"; };
+		5731DEC423DE380500EEDC56 /* AlertAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAnnotation.swift; sourceTree = "<group>"; };
+		5731DEC723DE3B9000EEDC56 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
+		5731DECD23DE3C7700EEDC56 /* AlertesMeteoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlertesMeteoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5731DED123DE3C7700EEDC56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5731DED823DE3C8D00EEDC56 /* ImagesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesTests.swift; sourceTree = "<group>"; };
 		5744CFD223C497F4000ECA2A /* AlertMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertMessageTableViewCell.swift; sourceTree = "<group>"; };
 		5744CFD423C4A026000ECA2A /* AlertValuesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertValuesTableViewCell.swift; sourceTree = "<group>"; };
 		574ED19423CD110100FD7AB1 /* rfc3339.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rfc3339.swift; sourceTree = "<group>"; };
 		5758721323DA2C9300E4BA87 /* AlertsTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsTableViewDataSource.swift; sourceTree = "<group>"; };
+		578268A623DF190A005253BB /* FloatingControlsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingControlsVC.swift; sourceTree = "<group>"; };
+		578268A923DF3060005253BB /* AMMapButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMMapButton.swift; sourceTree = "<group>"; };
 		578E230723DB77C700073DF6 /* TopicsTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicsTableViewDataSource.swift; sourceTree = "<group>"; };
 		57A7DDA523C68EB900031F8E /* Topic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
-		57CC11A623C5E40000F8CC99 /* SubscriptionListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionListViewController.swift; sourceTree = "<group>"; };
+		57CC11A623C5E40000F8CC99 /* SubscriptionListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionListVC.swift; sourceTree = "<group>"; };
 		57CC11A823C5E5E800F8CC99 /* SubscriptionsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsDataSource.swift; sourceTree = "<group>"; };
 		57E0153023C5FD3500AF1143 /* TopicsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicsDataSource.swift; sourceTree = "<group>"; };
-		57EFFCC723C0DE9500BFBCBA /* AlertListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertListViewController.swift; sourceTree = "<group>"; };
-		57EFFCD023C0EE9A00BFBCBA /* AlertDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDetailViewController.swift; sourceTree = "<group>"; };
+		57EFFCC723C0DE9500BFBCBA /* AlertListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertListVC.swift; sourceTree = "<group>"; };
+		57EFFCD023C0EE9A00BFBCBA /* AlertDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDetailVC.swift; sourceTree = "<group>"; };
 		57F23E3623C7C7AE006B9D73 /* TableViewHeaderWithButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewHeaderWithButton.swift; sourceTree = "<group>"; };
+		852457AAD775FF758C4DBEB1 /* Pods-AlertesMeteoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlertesMeteoTests.debug.xcconfig"; path = "Target Support Files/Pods-AlertesMeteoTests/Pods-AlertesMeteoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		DFB780C6BCB6A8D8C650DA5A /* Pods_AlertesMeteoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlertesMeteoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F03F31610E41B813F9474CA6 /* Pods_Alertes_Meteo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Alertes_Meteo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F22910365F576853A5AF5578 /* Pods-AlertesMeteoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlertesMeteoTests.release.xcconfig"; path = "Target Support Files/Pods-AlertesMeteoTests/Pods-AlertesMeteoTests.release.xcconfig"; sourceTree = "<group>"; };
 		F4FD6FCCA5EB1CD178EE02D4 /* Pods-Alertes Meteo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Alertes Meteo.release.xcconfig"; path = "Target Support Files/Pods-Alertes Meteo/Pods-Alertes Meteo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -71,6 +104,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5731DECA23DE3C7700EEDC56 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5630FDD124E290DD6C745B73 /* Pods_AlertesMeteoTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -78,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				570526D423AB8B77008B179F /* Alertes Meteo */,
+				5731DECE23DE3C7700EEDC56 /* AlertesMeteoTests */,
 				570526D323AB8B77008B179F /* Products */,
 				D7D604E1EC29ED978F42EEE0 /* Pods */,
 				C060293D0C4FC8DDA2737835 /* Frameworks */,
@@ -88,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				570526D223AB8B77008B179F /* Alertes Meteo.app */,
+				5731DECD23DE3C7700EEDC56 /* AlertesMeteoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,6 +138,7 @@
 		570526D423AB8B77008B179F /* Alertes Meteo */ = {
 			isa = PBXGroup;
 			children = (
+				5731DEC623DE3B7F00EEDC56 /* Utilities */,
 				570CA5DB23C13A0A00BB3F77 /* Extensions */,
 				57EFFCCF23C0EE3100BFBCBA /* Model */,
 				57EFFCCC23C0ED6000BFBCBA /* Views */,
@@ -122,6 +166,40 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		5731DEC123DE1F3B00EEDC56 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				5731DEC223DE1F9E00EEDC56 /* SensorLocationAnnotation.swift */,
+				5731DEC423DE380500EEDC56 /* AlertAnnotation.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		5731DEC623DE3B7F00EEDC56 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				5731DEC723DE3B9000EEDC56 /* Images.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		5731DECE23DE3C7700EEDC56 /* AlertesMeteoTests */ = {
+			isa = PBXGroup;
+			children = (
+				5731DED723DE3C7F00EEDC56 /* Utilities */,
+				5731DED123DE3C7700EEDC56 /* Info.plist */,
+			);
+			path = AlertesMeteoTests;
+			sourceTree = "<group>";
+		};
+		5731DED723DE3C7F00EEDC56 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				5731DED823DE3C8D00EEDC56 /* ImagesTests.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		5744CFD123C497CD000ECA2A /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +215,31 @@
 				574ED19423CD110100FD7AB1 /* rfc3339.swift */,
 			);
 			path = "RFC 3339";
+			sourceTree = "<group>";
+		};
+		578268A423DF18A3005253BB /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				578268A623DF190A005253BB /* FloatingControlsVC.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		578268A523DF18B7005253BB /* TableViews */ = {
+			isa = PBXGroup;
+			children = (
+				57F23E3523C7C77D006B9D73 /* Headers */,
+				5744CFD123C497CD000ECA2A /* Cells */,
+			);
+			path = TableViews;
+			sourceTree = "<group>";
+		};
+		578268A823DF3046005253BB /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				578268A923DF3060005253BB /* AMMapButton.swift */,
+			);
+			path = Buttons;
 			sourceTree = "<group>";
 		};
 		578E230923DB7AA000073DF6 /* DataSources */ = {
@@ -162,8 +265,9 @@
 		57EFFCCC23C0ED6000BFBCBA /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				57F23E3523C7C77D006B9D73 /* Headers */,
-				5744CFD123C497CD000ECA2A /* Cells */,
+				578268A823DF3046005253BB /* Buttons */,
+				578268A423DF18A3005253BB /* ViewControllers */,
+				578268A523DF18B7005253BB /* TableViews */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -171,9 +275,11 @@
 		57EFFCCD23C0ED6C00BFBCBA /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				57EFFCC723C0DE9500BFBCBA /* AlertListViewController.swift */,
-				57EFFCD023C0EE9A00BFBCBA /* AlertDetailViewController.swift */,
-				57CC11A623C5E40000F8CC99 /* SubscriptionListViewController.swift */,
+				5731DEBD23DC817D00EEDC56 /* RootTabBarVC.swift */,
+				57EFFCC723C0DE9500BFBCBA /* AlertListVC.swift */,
+				57EFFCD023C0EE9A00BFBCBA /* AlertDetailVC.swift */,
+				57CC11A623C5E40000F8CC99 /* SubscriptionListVC.swift */,
+				5731DEBF23DC824500EEDC56 /* MapVC.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -196,6 +302,7 @@
 			children = (
 				574ED19323CD10E400FD7AB1 /* RFC 3339 */,
 				578E230923DB7AA000073DF6 /* DataSources */,
+				5731DEC123DE1F3B00EEDC56 /* Map */,
 				57A7DDA523C68EB900031F8E /* Topic.swift */,
 				570CA5D923C0F45300BB3F77 /* Alert.swift */,
 			);
@@ -214,6 +321,7 @@
 			isa = PBXGroup;
 			children = (
 				F03F31610E41B813F9474CA6 /* Pods_Alertes_Meteo.framework */,
+				DFB780C6BCB6A8D8C650DA5A /* Pods_AlertesMeteoTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -223,6 +331,8 @@
 			children = (
 				275F135C4DE0C8C9E132D95A /* Pods-Alertes Meteo.debug.xcconfig */,
 				F4FD6FCCA5EB1CD178EE02D4 /* Pods-Alertes Meteo.release.xcconfig */,
+				852457AAD775FF758C4DBEB1 /* Pods-AlertesMeteoTests.debug.xcconfig */,
+				F22910365F576853A5AF5578 /* Pods-AlertesMeteoTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -249,6 +359,25 @@
 			productReference = 570526D223AB8B77008B179F /* Alertes Meteo.app */;
 			productType = "com.apple.product-type.application";
 		};
+		5731DECC23DE3C7700EEDC56 /* AlertesMeteoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5731DED423DE3C7800EEDC56 /* Build configuration list for PBXNativeTarget "AlertesMeteoTests" */;
+			buildPhases = (
+				14DDB84E481BD988F393E348 /* [CP] Check Pods Manifest.lock */,
+				5731DEC923DE3C7700EEDC56 /* Sources */,
+				5731DECA23DE3C7700EEDC56 /* Frameworks */,
+				5731DECB23DE3C7700EEDC56 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5731DED323DE3C7800EEDC56 /* PBXTargetDependency */,
+			);
+			name = AlertesMeteoTests;
+			productName = AlertesMeteoTests;
+			productReference = 5731DECD23DE3C7700EEDC56 /* AlertesMeteoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -261,6 +390,10 @@
 				TargetAttributes = {
 					570526D123AB8B77008B179F = {
 						CreatedOnToolsVersion = 11.2.1;
+					};
+					5731DECC23DE3C7700EEDC56 = {
+						CreatedOnToolsVersion = 11.2.1;
+						TestTargetID = 570526D123AB8B77008B179F;
 					};
 				};
 			};
@@ -278,6 +411,7 @@
 			projectRoot = "";
 			targets = (
 				570526D123AB8B77008B179F /* Alertes Meteo */,
+				5731DECC23DE3C7700EEDC56 /* AlertesMeteoTests */,
 			);
 		};
 /* End PBXProject section */
@@ -294,9 +428,38 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5731DECB23DE3C7700EEDC56 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		14DDB84E481BD988F393E348 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AlertesMeteoTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		4A214A0FCD7996527E526375 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -343,28 +506,52 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57CC11A723C5E40000F8CC99 /* SubscriptionListViewController.swift in Sources */,
+				57CC11A723C5E40000F8CC99 /* SubscriptionListVC.swift in Sources */,
 				5758721423DA2C9300E4BA87 /* AlertsTableViewDataSource.swift in Sources */,
 				578E230823DB77C700073DF6 /* TopicsTableViewDataSource.swift in Sources */,
 				570CA5DA23C0F45300BB3F77 /* Alert.swift in Sources */,
-				57EFFCD123C0EE9A00BFBCBA /* AlertDetailViewController.swift in Sources */,
+				578268A723DF190A005253BB /* FloatingControlsVC.swift in Sources */,
+				57EFFCD123C0EE9A00BFBCBA /* AlertDetailVC.swift in Sources */,
+				5731DEC023DC824500EEDC56 /* MapVC.swift in Sources */,
 				57F23E3723C7C7AE006B9D73 /* TableViewHeaderWithButton.swift in Sources */,
 				57CC11A923C5E5E800F8CC99 /* SubscriptionsDataSource.swift in Sources */,
 				574ED19523CD110100FD7AB1 /* rfc3339.swift in Sources */,
 				57E0153123C5FD3500AF1143 /* TopicsDataSource.swift in Sources */,
 				570CA5DF23C13ABF00BB3F77 /* Foundation+Ext.swift in Sources */,
+				5731DEC523DE380500EEDC56 /* AlertAnnotation.swift in Sources */,
 				5744CFD323C497F4000ECA2A /* AlertMessageTableViewCell.swift in Sources */,
 				570526D623AB8B77008B179F /* AppDelegate.swift in Sources */,
+				578268AA23DF3060005253BB /* AMMapButton.swift in Sources */,
+				5731DEBE23DC817D00EEDC56 /* RootTabBarVC.swift in Sources */,
+				5731DEC823DE3B9000EEDC56 /* Images.swift in Sources */,
+				5731DEC323DE1F9E00EEDC56 /* SensorLocationAnnotation.swift in Sources */,
 				570CA5D823C0F41800BB3F77 /* AlertsDataSource.swift in Sources */,
 				570CA5DD23C13A2300BB3F77 /* Firebase+Ext.swift in Sources */,
 				570526D823AB8B77008B179F /* SceneDelegate.swift in Sources */,
 				5744CFD523C4A026000ECA2A /* AlertValuesTableViewCell.swift in Sources */,
-				57EFFCC823C0DE9500BFBCBA /* AlertListViewController.swift in Sources */,
+				57EFFCC823C0DE9500BFBCBA /* AlertListVC.swift in Sources */,
 				57A7DDA623C68EBA00031F8E /* Topic.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5731DEC923DE3C7700EEDC56 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5731DEDA23DE3CA500EEDC56 /* Images.swift in Sources */,
+				5731DED923DE3C8D00EEDC56 /* ImagesTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5731DED323DE3C7800EEDC56 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 570526D123AB8B77008B179F /* Alertes Meteo */;
+			targetProxy = 5731DED223DE3C7800EEDC56 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		570526E023AB8B7F008B179F /* LaunchScreen.storyboard */ = {
@@ -536,6 +723,48 @@
 			};
 			name = Release;
 		};
+		5731DED523DE3C7800EEDC56 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 852457AAD775FF758C4DBEB1 /* Pods-AlertesMeteoTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5SYM9A33ZK;
+				INFOPLIST_FILE = AlertesMeteoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.remibardon.AlertesMeteoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Alertes Meteo.app/Alertes Meteo";
+			};
+			name = Debug;
+		};
+		5731DED623DE3C7800EEDC56 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F22910365F576853A5AF5578 /* Pods-AlertesMeteoTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5SYM9A33ZK;
+				INFOPLIST_FILE = AlertesMeteoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.remibardon.AlertesMeteoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Alertes Meteo.app/Alertes Meteo";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -553,6 +782,15 @@
 			buildConfigurations = (
 				570526E723AB8B7F008B179F /* Debug */,
 				570526E823AB8B7F008B179F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5731DED423DE3C7800EEDC56 /* Build configuration list for PBXNativeTarget "AlertesMeteoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5731DED523DE3C7800EEDC56 /* Debug */,
+				5731DED623DE3C7800EEDC56 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

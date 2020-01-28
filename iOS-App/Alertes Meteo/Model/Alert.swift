@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import UIKit.UIColor
+import UIKit.UIImage
 
 struct Alert: Decodable, Identifiable, Hashable {
 	
@@ -39,6 +41,36 @@ struct Alert: Decodable, Identifiable, Hashable {
 			return "🚨 Alerte critique"
 		default:
 			return "📢 Alerte"
+		}
+	}
+	
+	var levelColor: UIColor {
+		switch level {
+		case "OK":
+			return .systemGreen
+		case "INFO":
+			return .systemYellow
+		case "WARNING":
+			return .systemOrange
+		case "CRITICAL":
+			return .systemRed
+		default:
+			return .systemGray
+		}
+	}
+	
+	var levelIcon: UIImage? {
+		switch level {
+		case "OK":
+			return UIImage(systemName: "checkmark.circle.fill")
+		case "INFO":
+			return UIImage(systemName: "info.circle.fill")
+		case "WARNING":
+			return UIImage(systemName: "exclamationmark.bubble.fill")
+		case "CRITICAL":
+			return UIImage(systemName: "exclamationmark.triangle.fill")
+		default:
+			return nil
 		}
 	}
 	

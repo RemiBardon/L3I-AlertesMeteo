@@ -12,7 +12,10 @@ import FirebaseFirestore
 
 class AlertsDataSource: ObservableObject {
 	
-	@Published var alerts = [Alert]()
+	var alerts = [Alert]()
+	
+	let alertsSubject = PassthroughSubject<[Alert], Never>()
+	let newAlertSubject = PassthroughSubject<Alert, Never>()
 	
 	private var alertsListener: ListenerRegistration?
 	
@@ -52,24 +55,31 @@ class AlertsDataSource: ObservableObject {
 //					#endif
 					
 					let data = diff.document.prepareForDecoding()
-					guard let newAlert = try? JSONDecoder().decode(Alert.self, fromJSONObject: data) else { continue }
+					guard let newAlert = try? JSONDecoder().decode(Alert.self, fromJSONObject: data) else {
+						#if DEBUG
+						print("\(type(of: self)).\(#function): Could not decode spot \(data.debugDescription)")
+						#endif
+						continue
+					}
 					
 					let existingIndex = self.alerts.firstIndex(of: newAlert)
 					switch diff.type {
 					case .added, .modified:
 						if let index = existingIndex {
 							self.alerts[index] = newAlert
-						} else if let index = self.alerts.firstIndex(where: { newAlert.timestamp > $0.timestamp }) {
-							self.alerts.insert(newAlert, at: index)
 						} else {
-							self.alerts.append(newAlert)
+							let index = self.alerts.firstIndex(where: { newAlert.timestamp > $0.timestamp }) ?? self.alerts.count
+							self.alerts.insert(newAlert, at: index)
 						}
+						if diff.type == .added { self.newAlertSubject.send(newAlert) }
 					case .removed:
 						if let index = existingIndex {
 							self.alerts.remove(at: index)
 						}
 					}
 				}
+				
+				self.alertsSubject.send(self.alerts)
 			}
 	}
 	
