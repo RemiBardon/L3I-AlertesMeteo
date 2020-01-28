@@ -44,35 +44,9 @@ struct Alert: Decodable, Identifiable, Hashable {
 		}
 	}
 	
-	var levelColor: UIColor {
-		switch level {
-		case "OK":
-			return .systemGreen
-		case "INFO":
-			return .systemYellow
-		case "WARNING":
-			return .systemOrange
-		case "CRITICAL":
-			return .systemRed
-		default:
-			return .systemGray
-		}
-	}
+	var levelColor: UIColor { Alert.color(forLevel: level) }
 	
-	var levelIcon: UIImage? {
-		switch level {
-		case "OK":
-			return UIImage(systemName: "checkmark.circle.fill")
-		case "INFO":
-			return UIImage(systemName: "info.circle.fill")
-		case "WARNING":
-			return UIImage(systemName: "exclamationmark.bubble.fill")
-		case "CRITICAL":
-			return UIImage(systemName: "exclamationmark.triangle.fill")
-		default:
-			return nil
-		}
-	}
+	var levelIcon: UIImage? { Alert.icon(forLevel: level) }
 	
 	init(from decoder: Decoder) throws {
 		let container 	= try decoder.container(keyedBy: CodingKeys.self)
@@ -108,6 +82,36 @@ struct Alert: Decodable, Identifiable, Hashable {
 		case compass
 		case latitude
 		case longitude
+	}
+	
+	static func color(forLevel level: String?) -> UIColor {
+		switch level {
+		case "OK":
+			return .systemGreen
+		case "INFO":
+			return .systemYellow
+		case "WARNING":
+			return .systemOrange
+		case "CRITICAL":
+			return .systemRed
+		default:
+			return .systemGray
+		}
+	}
+	
+	static func icon(forLevel level: String?) -> UIImage? {
+		switch level {
+		case "OK":
+			return UIImage(systemName: "checkmark.circle.fill")
+		case "INFO":
+			return UIImage(systemName: "info.circle.fill")
+		case "WARNING":
+			return UIImage(systemName: "exclamationmark.bubble.fill")
+		case "CRITICAL":
+			return UIImage(systemName: "exclamationmark.triangle.fill")
+		default:
+			return nil
+		}
 	}
 	
 }

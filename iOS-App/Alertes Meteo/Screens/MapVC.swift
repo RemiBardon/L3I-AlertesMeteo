@@ -70,9 +70,9 @@ class MapVC: UIViewController {
 			guard let self = self else { return }
 			
 			let data = snapshot.prepareForDecoding()
-			#if DEBUG
-			print("\(type(of: self)).\(#function): New child: \(data)")
-			#endif
+//			#if DEBUG
+//			print("\(type(of: self)).\(#function): New child: \(data)")
+//			#endif
 			
 			#warning("Add debug messages")
 			guard let sensorName = data["sensorName"] as? String else { return }
@@ -104,9 +104,9 @@ class MapVC: UIViewController {
 		// Listen for deleted comments in the Firebase database
 		sensorLocationsRef.observe(.childRemoved, with: { (snapshot) -> Void in
 			let data = snapshot.prepareForDecoding()
-			#if DEBUG
-			print("\(type(of: self)).\(#function): Deleted child: \(data)")
-			#endif
+//			#if DEBUG
+//			print("\(type(of: self)).\(#function): Deleted child: \(data)")
+//			#endif
 //		  let index = self.indexOfMessage(snapshot)
 //		  self.comments.remove(at: index)
 //		  self.tableView.deleteRows(at: [IndexPath(row: index, section: self.kSectionComments)], with: UITableView.RowAnimation.automatic)
@@ -193,14 +193,20 @@ extension MapVC: MKMapViewDelegate {
 			
 			return annotationView
 		} else if let clusterAnnotation = annotation as? MKClusterAnnotation {
-			let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "MKClusterAnnotation") as? MKMarkerAnnotationView ?? {
-				let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "MKClusterAnnotation")
-				annotationView.titleVisibility = .hidden
-				return annotationView
-			}()
+			let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "MKClusterAnnotation") as? MKMarkerAnnotationView ?? MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "MKClusterAnnotation")
 			
 			annotationView.annotation = annotation
-			annotationView.glyphText = String(clusterAnnotation.memberAnnotations.count)
+			
+			// Reseach of the more critical level in the clustered annotations
+			let clusteredAlertAnnotations: [AlertAnnotation] = clusterAnnotation.memberAnnotations.compactMap { $0 as? AlertAnnotation }
+			var clusteredLevels = Set<String>()
+			for annotation in clusteredAlertAnnotations {
+				clusteredLevels.insert(annotation.alert.level)
+			}
+			let orderedLevels = ["CRITICAL", "WARNING", "INFO", "OK"]
+			let maxLevel = orderedLevels.first { clusteredLevels.contains($0) }
+			
+			annotationView.markerTintColor = Alert.color(forLevel: maxLevel)
 			
 			return annotationView
 		} else if let alertAnnotation = annotation as? AlertAnnotation {
