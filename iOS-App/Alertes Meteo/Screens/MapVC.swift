@@ -26,6 +26,7 @@ class MapVC: UIViewController {
 	private var subscriptionCanceller: AnyCancellable?
 	
 	private let editModeSegmentedControl = UISegmentedControl()
+	private var boatName = "ios-app"
 	enum SegmentIndexes: Int {
 		case normal, debug
 	}
@@ -147,8 +148,11 @@ class MapVC: UIViewController {
 		
 		let filterButton = AMMapButton(icon: Images.filter.uiImage)
 		filterButton.addTarget(self, action: #selector(showFilters), for: .touchUpInside)
-		
 		vc.addControl(filterButton, in: .bottom)
+		
+		let newBoatButton = AMMapButton(icon: UIImage(systemName: "goforward.plus"))
+		newBoatButton.addTarget(self, action: #selector(createNewBoat), for: .touchUpInside)
+		vc.addControl(newBoatButton, in: .topRight)
 		
 		vc.addControl(editModeSegmentedControl, in: .top)
 		
@@ -169,7 +173,7 @@ class MapVC: UIViewController {
 		let coordinate = mapView.convert(sender.location(in: sender.view), toCoordinateFrom: sender.view)
 		
 		let data: [String:Any] = [
-			"sensorName": "ios-app",
+			"sensorName": boatName,
 			"timestamp": rfc3339DateTimeStringForDate(date: Date()),
 			"latitude": coordinate.latitude,
 			"longitude": coordinate.longitude
@@ -184,6 +188,14 @@ class MapVC: UIViewController {
 		#if DEBUG
 		print("\(type(of: self)).\(#function): Tap")
 		#endif
+	}
+	
+	@objc func createNewBoat() {
+		#if DEBUG
+		print("\(type(of: self)).\(#function)")
+		#endif
+		
+		boatName = "ios-app-\(Date().timeIntervalSince1970)"
 	}
 	
 }
