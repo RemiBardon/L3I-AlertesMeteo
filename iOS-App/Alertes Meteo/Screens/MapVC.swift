@@ -154,6 +154,10 @@ class MapVC: UIViewController {
 		newBoatButton.addTarget(self, action: #selector(createNewBoat), for: .touchUpInside)
 		vc.addControl(newBoatButton, in: .topRight)
 		
+		let resetBoatsButton = AMMapButton(icon: UIImage(systemName: "trash.fill"))
+		resetBoatsButton.addTarget(self, action: #selector(resetBoatLocations), for: .touchUpInside)
+		vc.addControl(resetBoatsButton, in: .topRight)
+		
 		vc.addControl(editModeSegmentedControl, in: .top)
 		
 		let safeAreaFrame = view.safeAreaLayoutGuide.layoutFrame
@@ -196,6 +200,12 @@ class MapVC: UIViewController {
 		#endif
 		
 		boatName = "ios-app-\(Date().timeIntervalSince1970)"
+	}
+	
+	@objc func resetBoatLocations() {
+		#if DEBUG
+		print("\(type(of: self)).\(#function)")
+		#endif
 	}
 	
 }
