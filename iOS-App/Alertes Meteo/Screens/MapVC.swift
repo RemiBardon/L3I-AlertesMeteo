@@ -25,6 +25,11 @@ class MapVC: UIViewController {
 	private let alertsDataSource = AlertsDataSource()
 	private var subscriptionCanceller: AnyCancellable?
 	
+	private let editModeSegmentedControl = UISegmentedControl()
+	enum SegmentIndexes: Int {
+		case normal, debug
+	}
+	
 	// MARK: - Lifecycle
 	
 	override func viewDidLoad() {
@@ -33,6 +38,7 @@ class MapVC: UIViewController {
 		configureMapView()
 		listenForChanges()
 		configureAlertsDataSource()
+		configureEditModeSegmentedControl()
 		configureFloatingControlsVC()
 	}
 	
@@ -70,9 +76,9 @@ class MapVC: UIViewController {
 			guard let self = self else { return }
 			
 			let data = snapshot.prepareForDecoding()
-//			#if DEBUG
-//			print("\(type(of: self)).\(#function): New child: \(data)")
-//			#endif
+			#if DEBUG
+			print("\(type(of: self)).\(#function): New child: \(data)")
+			#endif
 			
 			#warning("Add debug messages")
 			guard let sensorName = data["sensorName"] as? String else { return }
@@ -104,9 +110,9 @@ class MapVC: UIViewController {
 		// Listen for deleted comments in the Firebase database
 		sensorLocationsRef.observe(.childRemoved, with: { (snapshot) -> Void in
 			let data = snapshot.prepareForDecoding()
-//			#if DEBUG
-//			print("\(type(of: self)).\(#function): Deleted child: \(data)")
-//			#endif
+			#if DEBUG
+			print("\(type(of: self)).\(#function): Deleted child: \(data)")
+			#endif
 //		  let index = self.indexOfMessage(snapshot)
 //		  self.comments.remove(at: index)
 //		  self.tableView.deleteRows(at: [IndexPath(row: index, section: self.kSectionComments)], with: UITableView.RowAnimation.automatic)
@@ -127,6 +133,15 @@ class MapVC: UIViewController {
 			}
 	}
 	
+	private func configureEditModeSegmentedControl() {
+		editModeSegmentedControl.backgroundColor = .tertiarySystemBackground
+		
+		editModeSegmentedControl.insertSegment(withTitle: "Mode normal", at: SegmentIndexes.normal.rawValue, animated: false)
+		editModeSegmentedControl.insertSegment(withTitle: "Mode interactif", at: SegmentIndexes.debug.rawValue, animated: false)
+		
+		editModeSegmentedControl.selectedSegmentIndex = SegmentIndexes.normal.rawValue
+	}
+	
 	private func configureFloatingControlsVC() {
 		let vc = FloatingControlsVC()
 		
@@ -134,6 +149,8 @@ class MapVC: UIViewController {
 		filterButton.addTarget(self, action: #selector(showFilters), for: .touchUpInside)
 		
 		vc.addControl(filterButton, in: .bottom)
+		
+		vc.addControl(editModeSegmentedControl, in: .top)
 		
 		let safeAreaFrame = view.safeAreaLayoutGuide.layoutFrame
 		vc.view.frame = CGRect(origin: .zero, size: safeAreaFrame.size)
@@ -147,6 +164,8 @@ class MapVC: UIViewController {
 
 	#if DEBUG
 	@objc private func mapTapped(sender: UITapGestureRecognizer) {
+		guard editModeSegmentedControl.selectedSegmentIndex == SegmentIndexes.debug.rawValue else { return }
+		
 		let coordinate = mapView.convert(sender.location(in: sender.view), toCoordinateFrom: sender.view)
 		
 		let data: [String:Any] = [
@@ -210,8 +229,8 @@ extension MapVC: MKMapViewDelegate {
 			
 			return annotationView
 		} else if let alertAnnotation = annotation as? AlertAnnotation {
-			let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "MKClusterAnnotation") as? MKMarkerAnnotationView ?? {
-				let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "MKClusterAnnotation")
+			let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "AlertAnnotation") as? MKMarkerAnnotationView ?? {
+				let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "AlertAnnotation")
 				annotationView.clusteringIdentifier = "Alerts"
 				return annotationView
 			}()
