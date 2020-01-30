@@ -18,6 +18,8 @@ class SensorLocationAnnotation: MKPointAnnotation {
 		self.timestamp 	= timestamp
 		
 		super.init()
+		
+		title = sensorName
 	}
 	
 	func setCoordinate(_ coordinate: CLLocationCoordinate2D, timestamp: String) {
