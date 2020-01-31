@@ -26,7 +26,7 @@ class MapVC: UIViewController {
 	private var subscriptionCanceller: AnyCancellable?
 	
 	private let editModeSegmentedControl = UISegmentedControl()
-	private var boatName = "ios-app"
+	private var boatName = "ios-app-\(Int(Date().timeIntervalSince1970))"
 	enum SegmentIndexes: Int {
 		case normal, debug
 	}
@@ -244,7 +244,7 @@ class MapVC: UIViewController {
 		print("\(type(of: self)).\(#function)")
 		#endif
 		
-		boatName = "ios-app-\(Date().timeIntervalSince1970)"
+		boatName = "ios-app-\(Int(Date().timeIntervalSince1970))"
 	}
 	
 	@objc func resetBoatLocations() {
