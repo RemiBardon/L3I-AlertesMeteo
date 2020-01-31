@@ -101,6 +101,11 @@ class MapVC: UIViewController {
 			
 			let index 		= self.overlaysCoordinates[sensorName]?.index 		?? self.mapView.overlays.count
 			var coordinates = self.overlaysCoordinates[sensorName]?.coordinates ?? []
+			
+			if !coordinates.isEmpty {
+				self.mapView.removeOverlay(self.mapView.overlays[index])
+			}
+			
 			coordinates.append(coordinate)
 			
 			let polyline = MKPolyline(coordinates: &coordinates, count: coordinates.count)
@@ -111,12 +116,52 @@ class MapVC: UIViewController {
 		// Listen for deleted comments in the Firebase database
 		sensorLocationsRef.observe(.childRemoved, with: { (snapshot) -> Void in
 			let data = snapshot.prepareForDecoding()
+			
 			#if DEBUG
 			print("\(type(of: self)).\(#function): Deleted child: \(data)")
 			#endif
-//		  let index = self.indexOfMessage(snapshot)
-//		  self.comments.remove(at: index)
-//		  self.tableView.deleteRows(at: [IndexPath(row: index, section: self.kSectionComments)], with: UITableView.RowAnimation.automatic)
+			
+			#warning("Add debug messages")
+			guard let sensorName = data["sensorName"] as? String else { return }
+			guard let latitude = data["latitude"] as? Double, let longitude = data["longitude"] as? Double else { return }
+			
+			guard let overlayCoordinates = self.overlaysCoordinates[sensorName] else { return }
+			
+			for overlayCoordinate in overlayCoordinates.1.enumerated() {
+				if overlayCoordinate.element.latitude == latitude && overlayCoordinate.element.longitude == longitude {
+					var coordinates = overlayCoordinates.coordinates
+
+					if !coordinates.isEmpty {
+						self.mapView.removeOverlay(self.mapView.overlays[overlayCoordinates.index])
+					}
+					
+					guard coordinates.count > overlayCoordinate.offset else { continue }
+					
+					if overlayCoordinate.offset == coordinates.count - 1 {
+						guard let timestamp = data["timestamp"] as? String else { break }
+						
+						guard let annotation = self.sensorLocations[sensorName] else { break }
+						
+						if coordinates.count < 2 {
+							self.mapView.removeAnnotation(annotation)
+						} else {
+							let coordinate = coordinates[coordinates.count - 2]
+							annotation.setCoordinate(coordinate, timestamp: timestamp)
+						}
+					}
+					
+					coordinates.remove(at: overlayCoordinate.offset)
+					
+					if !coordinates.isEmpty {
+						let polyline = MKPolyline(coordinates: &coordinates, count: coordinates.count)
+						self.mapView.insertOverlay(polyline, at: overlayCoordinates.index)
+						
+						self.overlaysCoordinates[sensorName] = (index: overlayCoordinates.index, coordinates: coordinates)
+					} else {
+						self.overlaysCoordinates.removeValue(forKey: sensorName)
+					}
+				}
+			}
 		})
 	}
 	
