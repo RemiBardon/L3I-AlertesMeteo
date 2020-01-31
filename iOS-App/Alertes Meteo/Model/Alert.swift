@@ -44,7 +44,7 @@ struct Alert: Decodable, Identifiable, Hashable {
 		}
 	}
 	
-	var levelColor: UIColor { Alert.color(forLevel: level) }
+	var levelColor: UIColor? { Alert.color(forLevel: level) }
 	
 	var levelIcon: UIImage? { Alert.icon(forLevel: level) }
 	
@@ -84,7 +84,7 @@ struct Alert: Decodable, Identifiable, Hashable {
 		case longitude
 	}
 	
-	static func color(forLevel level: String?) -> UIColor {
+	static func color(forLevel level: String?) -> UIColor? {
 		switch level {
 		case "OK":
 			return .systemGreen
@@ -95,7 +95,7 @@ struct Alert: Decodable, Identifiable, Hashable {
 		case "CRITICAL":
 			return .systemRed
 		default:
-			return .systemGray
+			return nil
 		}
 	}
 	

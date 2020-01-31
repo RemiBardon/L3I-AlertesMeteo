@@ -247,7 +247,7 @@ extension MapVC: MKMapViewDelegate {
 			let orderedLevels = ["CRITICAL", "WARNING", "INFO", "OK"]
 			let maxLevel = orderedLevels.first { clusteredLevels.contains($0) }
 			
-			annotationView.markerTintColor = Alert.color(forLevel: maxLevel)
+			annotationView.markerTintColor = Alert.color(forLevel: maxLevel) ?? .systemBlue
 			
 			return annotationView
 		} else if let alertAnnotation = annotation as? AlertAnnotation {
