@@ -20,7 +20,8 @@ class MapVC: UIViewController {
 	private var refHandle: DatabaseHandle?
 	
 	private var sensorLocations = [String: SensorLocationAnnotation]()
-	private var overlaysCoordinates = [String: (index: Int, coordinates: [CLLocationCoordinate2D])]()
+	private var overlaysCoordinates = [String: (overlayIndex: Int, coordinates: [CLLocationCoordinate2D])]()
+	private var locationsRefs = [String: [String: DatabaseReference]]()
 	
 	private let alertsDataSource = AlertsDataSource()
 	private var subscriptionCanceller: AnyCancellable?
@@ -99,8 +100,8 @@ class MapVC: UIViewController {
 				self.sensorLocations[sensorName] = newAnnotation
 			}
 			
-			let index 		= self.overlaysCoordinates[sensorName]?.index 		?? self.mapView.overlays.count
-			var coordinates = self.overlaysCoordinates[sensorName]?.coordinates ?? []
+			let index 		= self.overlaysCoordinates[sensorName]?.overlayIndex 	?? self.mapView.overlays.count
+			var coordinates = self.overlaysCoordinates[sensorName]?.coordinates 	?? []
 			
 			if !coordinates.isEmpty {
 				self.mapView.removeOverlay(self.mapView.overlays[index])
@@ -109,9 +110,17 @@ class MapVC: UIViewController {
 			coordinates.append(coordinate)
 			
 			let polyline = MKPolyline(coordinates: &coordinates, count: coordinates.count)
+			polyline.title = sensorName
 			self.mapView.insertOverlay(polyline, at: index)
 			
-			self.overlaysCoordinates[sensorName] = (index: index, coordinates: coordinates)
+			self.overlaysCoordinates[sensorName] = (overlayIndex: index, coordinates: coordinates)
+			var sensorLocations = self.locationsRefs[sensorName] ?? {
+				let emptyDictionary = [String: DatabaseReference]()
+				self.locationsRefs[sensorName] = emptyDictionary
+				return emptyDictionary
+			}()
+			sensorLocations[timestamp] = snapshot.ref
+			self.locationsRefs[sensorName] = sensorLocations
 		})
 		// Listen for deleted comments in the Firebase database
 		sensorLocationsRef.observe(.childRemoved, with: { (snapshot) -> Void in
@@ -123,6 +132,11 @@ class MapVC: UIViewController {
 			
 			#warning("Add debug messages")
 			guard let sensorName = data["sensorName"] as? String else { return }
+			
+			if let timestamp = data["timestamp"] as? String {
+				self.locationsRefs[sensorName]?.removeValue(forKey: timestamp)
+			}
+			
 			guard let latitude = data["latitude"] as? Double, let longitude = data["longitude"] as? Double else { return }
 			
 			guard let overlayCoordinates = self.overlaysCoordinates[sensorName] else { return }
@@ -130,10 +144,6 @@ class MapVC: UIViewController {
 			for overlayCoordinate in overlayCoordinates.1.enumerated() {
 				if overlayCoordinate.element.latitude == latitude && overlayCoordinate.element.longitude == longitude {
 					var coordinates = overlayCoordinates.coordinates
-
-					if !coordinates.isEmpty {
-						self.mapView.removeOverlay(self.mapView.overlays[overlayCoordinates.index])
-					}
 					
 					guard coordinates.count > overlayCoordinate.offset else { continue }
 					
@@ -151,13 +161,20 @@ class MapVC: UIViewController {
 					}
 					
 					coordinates.remove(at: overlayCoordinate.offset)
+					self.overlaysCoordinates[sensorName] = (overlayIndex: overlayCoordinates.overlayIndex, coordinates: coordinates)
+					
+					if self.mapView.overlays.count > overlayCoordinates.overlayIndex {
+						if let overlay = self.mapView.overlays.first(where: { $0.title == sensorName }) {
+							self.mapView.removeOverlay(overlay)
+						}
+					}
 					
 					if !coordinates.isEmpty {
 						let polyline = MKPolyline(coordinates: &coordinates, count: coordinates.count)
-						self.mapView.insertOverlay(polyline, at: overlayCoordinates.index)
-						
-						self.overlaysCoordinates[sensorName] = (index: overlayCoordinates.index, coordinates: coordinates)
+						polyline.title = sensorName
+						self.mapView.insertOverlay(polyline, at: overlayCoordinates.overlayIndex)
 					} else {
+						self.sensorLocations.removeValue(forKey: sensorName)
 						self.overlaysCoordinates.removeValue(forKey: sensorName)
 					}
 				}
@@ -251,6 +268,10 @@ class MapVC: UIViewController {
 		#if DEBUG
 		print("\(type(of: self)).\(#function)")
 		#endif
+		
+		for sensorLocationsRef in locationsRefs.values.flatMap({ $0.filter({ $0.key > "2020-01-30 11:15:09.743000" }).values }) {
+			sensorLocationsRef.removeValue()
+		}
 	}
 	
 }
