@@ -118,3 +118,16 @@ extension Date {
 	}
 	
 }
+
+// https://www.hackingwithswift.com/articles/108/how-to-use-regular-expressions-in-swift
+extension NSRegularExpression {
+	
+	convenience init(_ pattern: String) {
+		do {
+			try self.init(pattern: pattern)
+		} catch {
+			preconditionFailure("Illegal regular expression: \(pattern).")
+		}
+	}
+	
+}

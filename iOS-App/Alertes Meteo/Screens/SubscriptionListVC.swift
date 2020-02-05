@@ -17,6 +17,9 @@ class SubscriptionListVC: UITableViewController {
 	
 	private let dataSource = SubscriptionsDataSource()
 	private var subscriptionCanceller: AnyCancellable?
+	
+	private weak var subscribeAction: UIAlertAction?
+	private weak var topicNameTextField: UITextField?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +58,8 @@ class SubscriptionListVC: UITableViewController {
 		tableView.setEditing(true, animated: false)
 	}
 	
+	// MARK: - Events
+	
 	@objc private func save() {
 		#if DEBUG
 		print("\(type(of: self)).\(#function): Dismiss")
@@ -66,18 +71,31 @@ class SubscriptionListVC: UITableViewController {
 		#if DEBUG
 		print("\(type(of: self)).\(#function): Add topic")
 		#endif
+		
 		let alert = UIAlertController(title: "Abonnez-vous à un groupe d'alertes", message: nil, preferredStyle: .alert)
+		
 		alert.addTextField { (textField: UITextField) in
-			textField.placeholder = "Nom du groupe d'alertes"
+			self.topicNameTextField = textField
+			textField.placeholder = "Nom de l'alerte"
+			textField.addTarget(self, action: #selector(self.nameTextFieldChanged), for: .editingChanged)
+		}
+		alert.addTextField { (textField: UITextField) in
+			textField.placeholder = "Groupe de capteurs"
 		}
 		alert.addAction(UIAlertAction(title: "Annuler", style: .cancel))
-		alert.addAction(UIAlertAction(title: "S'abonner", style: .default, handler: { [weak self] (action: UIAlertAction) in
+		let subscribeAction = UIAlertAction(title: "S'abonner", style: .default, handler: { [weak self] (action: UIAlertAction) in
 			guard let self = self else { return }
-			guard let topic = alert.textFields?.first?.text else {
+			
+			guard let textFields = alert.textFields, textFields.count >= 2 else { return }
+			
+			guard let topicName = textFields[0].text else {
 				#warning("Show alert if unable to subscribe")
 				return
 			}
-
+			let group = textFields[1].text ?? ""
+			
+			let topic = self.getTopic(fromTopicName: topicName, andGroup: group)
+			
 			var actualTopics = UserDefaults.standard.stringArray(forKey: "topicSubscriptions")
 			if actualTopics?.contains(topic) != true {
 				Messaging.messaging().subscribe(toTopic: topic) { [weak self] error in
@@ -94,8 +112,16 @@ class SubscriptionListVC: UITableViewController {
 					}
 				}
 			}
-		}))
+		})
+		subscribeAction.isEnabled = false
+		self.subscribeAction = subscribeAction
+		alert.addAction(subscribeAction)
+		
 		present(alert, animated: true)
+	}
+	
+	@objc private func nameTextFieldChanged() {
+		subscribeAction?.isEnabled = topicNameTextField?.text?.isEmpty == false
 	}
 	
 	private func unsubscribe(from topic: String) {
@@ -114,6 +140,28 @@ class SubscriptionListVC: UITableViewController {
 				}
 			}
 		}
+	}
+	
+	private func getTopic(fromTopicName topicName: String, andGroup group: String) -> String {
+		if group.isEmpty {
+			return "\(normalize(topicName))"
+		} else {
+			return "\(normalize(topicName))-\(normalize(group))"
+		}
+	}
+	
+	private func normalize(_ string: String) -> String {
+		let foldingOptions: String.CompareOptions = [.diacriticInsensitive, .widthInsensitive, .caseInsensitive]
+		let whitespaces = CharacterSet.whitespacesAndNewlines
+		
+		let string = string
+			.folding(options: foldingOptions, locale: nil) 						// Remove accents (https://stackoverflow.com/a/40282304/10967642)
+			.components(separatedBy: whitespaces).joined(separator: "_") 		// Replace whitespaces by undescrores
+			.components(separatedBy: "-").joined(separator: "_") 				// Replace dashes by underscores to keep undescores as separators
+		
+		let regex = NSRegularExpression("[^a-zA-Z0-9_.~%-]")
+		let range = NSRange(location: 0, length: string.count)
+		return regex.stringByReplacingMatches(in: string, options: [], range: range, withTemplate: "") // Remove remaining prohibited characters
 	}
 	
 	// MARK: - UITableViewDelegate
