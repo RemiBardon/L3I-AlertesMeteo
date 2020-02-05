@@ -98,6 +98,7 @@ class TopicsDataSource: ObservableObject {
 				
 				// Rorder topics
 				var unorderedTopics = self.topics // We have to store all the topics before we override them in self.topics
+				self.topics.removeSubrange(subscriptions.count..<self.topics.count)
 				for subscription in subscriptions.enumerated() {
 					if let index = unorderedTopics.firstIndex(where: { $0.name == subscription.element }) {
 						self.topics[subscription.offset] = unorderedTopics[index]
