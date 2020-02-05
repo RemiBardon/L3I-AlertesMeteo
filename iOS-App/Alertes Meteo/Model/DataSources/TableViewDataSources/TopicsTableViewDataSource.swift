@@ -48,7 +48,12 @@ class TopicsTableViewDataSource: UITableViewDiffableDataSource<TopicsTableViewDa
 		DispatchQueue.main.async { self.apply(snapshot, animatingDifferences: true) }
     }
 	
-	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? { topics[section].name }
+	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		switch snapshot().sectionIdentifiers[section] {
+		case .topic(name: let name):
+			return name
+		}
+	}
 	
 	deinit {
 		topicsDataSource.stopListening()
