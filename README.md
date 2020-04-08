@@ -114,10 +114,11 @@ Ce projet est l'application mobile développée pour iOS en Swift permettant à 
 
 ### Cocoapods
 
-![FirebaseFirestore version](https://img.shields.io/badge/Firebase/Firestore-v1.8.3-informational)
+![FirebaseFirestore version](https://img.shields.io/badge/Firebase/Firestore-v1.11.2-informational)
 ![FirebaseFunctions version](https://img.shields.io/badge/Firebase/Functions-v2.5.1-informational)
-![FirebaseMessaging version](https://img.shields.io/badge/Firebase/Messaging-v4.1.10-informational)
-![FirebaseInAppMessaging version](https://img.shields.io/badge/Firebase/InAppMessaging-v0.15.6-important)
+![FirebaseMessaging version](https://img.shields.io/badge/Firebase/Messaging-v4.3.0-informational)
+![FirebaseDatabase version](https://img.shields.io/badge/Firebase/Database-v6.1.4-informational)
+![FirebaseInAppMessaging version](https://img.shields.io/badge/Firebase/InAppMessaging-v0.19.1-important)
 
 ## Commandes utiles
 
