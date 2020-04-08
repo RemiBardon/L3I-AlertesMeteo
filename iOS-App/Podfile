@@ -1,11 +1,16 @@
 # Uncomment the next line to define a global platform for your project
 platform :ios, '13.0'
 
-target 'Alertes Meteo' do
+target 'AlertesMeteo' do
   # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!
+  #use_frameworks!
 
-  # Pods for Alertes Meteo
+  # Apple blocked utilizing external frameworks on free accounts with 13.3.1 upgrade
+  # Use static libraries instead
+  # https://stackoverflow.com/a/60211703/10967642
+  #use_modular_headers!
+
+  # Pods for AlertesMeteo
 
   # add pods for desired Firebase products
   # https://firebase.google.com/docs/ios/setup#available-pods
