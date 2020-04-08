@@ -12,9 +12,7 @@ exports.alertCreated = functions.firestore.document('alerts/{alertId}')
     // e.g. {'name': 'Marie', 'age': 66}
     const newValue = snap.data();
 
-    if (!newValue) {
-        return 1;
-    }
+    if (!newValue) { return 1; }
 
     const alertMessage = newValue.message;
     if (!(typeof alertMessage === 'string')) { return 1; }
@@ -22,56 +20,116 @@ exports.alertCreated = functions.firestore.document('alerts/{alertId}')
     const alertLevel = newValue.level;
     if (!(typeof alertLevel === 'string')) { return 1; }
 
+    const alertName = newValue.alertName;
+    if (!(typeof alertName === 'string')) { return 1; }
+
+    const topicsUpdatePromises: Promise<FirebaseFirestore.WriteResult>[] = [];
+    const mainTopic = sanitize(alertName);
+    const sender    = sanitize(newValue.sender);
+    const location  = sanitize(newValue.location);
+
+    // Generate all topic names related to the alert
+    const topics = [mainTopic];                                     // The alert name itself
+    if (typeof sender === 'string' && sender.length !== 0) {
+        topics.push(sender);                                        // The sender
+        topics.push(mainTopic + '-' + sender);                      // The couple 'alert_name-sender'
+    }
+    if (typeof location === 'string' && location.length !== 0) {
+        topics.push(location);                                      // The location
+        topics.push(mainTopic + '-' + location);                    // The couple 'alert_name-location'
+    }
+
+    // Get the `FieldValue` object
+    const FieldValue = admin.firestore.FieldValue;
+    
+    for (const topic of topics) {
+        // Atomically increment the alert counter in 'topics' and store the new level.
+        // https://firebase.google.com/docs/firestore/manage-data/add-data?authuser=1#increment_a_numeric_value
+        topicsUpdatePromises.push(
+            admin.firestore().collection('topics').doc(topic).set({
+                alertCount: FieldValue.increment(1),
+                level: alertLevel,
+                message: alertMessage
+            }, {merge: true})
+        );
+    }
+    const topicsUpdatePromise = Promise.all(topicsUpdatePromises);
+
+    // Store the topics array in the alert document.
+    const documentUpdatePromise = snap.ref.update({ topics: topics });
+
+    return Promise.all([topicsUpdatePromise, documentUpdatePromise]);
+});
+
+exports.alertDeleted = functions.firestore.document('alerts/{alertId}')
+.onDelete((snap, _) => {
+    const newValue = snap.data();
+    if (!newValue) { return 1; }
+
+    const topics = newValue.topics;
+    if (!topics) { return 1; }
+
     // Get the `FieldValue` object
     const FieldValue = admin.firestore.FieldValue;
 
-    const messages = [];
-    const topicsUploadPromises: Promise<FirebaseFirestore.WriteResult>[] = [];
-    const topics = [newValue.topic]
-    if (typeof newValue.sender === 'string' && newValue.sender.length !== 0) {
-        topics.push(newValue.topic + '_' + newValue.sender);
-    }
-    if (typeof newValue.location === 'string' && newValue.location.length !== 0) {
-        topics.push(newValue.topic + '_' + newValue.location);
-    }
+    const topicsUpdatePromises: Promise<FirebaseFirestore.WriteResult>[] = [];
     for (const topic of topics) {
-        // Create the nofifications
-        messages.push({
-            notification: {
-                title: alertLevel,
-                body: alertMessage,
-                //badge: 1,
-            },
-            data: {
-                level: alertLevel,
-                message: alertMessage
-            },
-            topic: topic
-        });
-        // Atomically increment the alert counter in 'topics'.
+        // Atomically increment the alert counter in 'topics' and store the new level.
         // https://firebase.google.com/docs/firestore/manage-data/add-data?authuser=1#increment_a_numeric_value
-        topicsUploadPromises.push(
+        topicsUpdatePromises.push(
             admin.firestore().collection('topics').doc(topic).set({
-                alertCount: FieldValue.increment(1)
+                alertCount: FieldValue.increment(-1)
             }, {merge: true})
         );
-    };
-    const topicsUploadPromise = Promise.all(topicsUploadPromises);
+    }
+
+    return topicsUpdatePromises;
+});
+
+exports.topicUpdated = functions.firestore.document('topics/{topicId}')
+.onUpdate((change, context) => {
+    const oldValue = change.before.data();
+    const newValue = change.after.data();
+
+    if (!(oldValue) || !(newValue)) { return 1; }
+
+    const oldLevel = oldValue.level;
+    if (!(typeof oldLevel === 'string')) { return 1; }
+    const newLevel = newValue.level;
+    if (!(typeof newLevel === 'string')) { return 1; }
+
+    if (newLevel === oldLevel) { return 1; }
+
+    const alertMessage = newValue.message;
+    if (!(typeof alertMessage === 'string')) { return 1; }
+
+    const documentUpdatePromise = change.after.ref.set({
+        previousLevel: oldLevel
+    }, {merge: true});
+
+    const topic = context.params.topicId;
 
     // Send a message to devices subscribed to the topics.
-    const notificationsPromise = admin.messaging().sendAll(messages)
+    const notificationPromise = admin.messaging().send({
+        notification: {
+            title: newLevel,
+            body: alertMessage,
+            //badge: 1,
+        },
+        data: {
+            level: newLevel,
+            message: alertMessage
+        },
+        topic: topic
+    })
     .then((response) => {
-        if (typeof response.failureCount === 'number' && response.failureCount >= 0) {
-            console.error('Error sending ', response.failureCount, ' messages.');
-        }
-        // response.responses is a message ID string array.
-        console.log('Successfully sent ', response.successCount, ' message(s):', response.responses);
+        console.log('Successfully sent message: ', response);
     })
     .catch((error) => {
-        console.log('Error sending message(s):', error);
+        console.error('Error sending message: ', error);
     });
 
-    return Promise.all([notificationsPromise, topicsUploadPromise]);
+    return Promise.all([documentUpdatePromise, notificationPromise]);
 });
 
 exports.createAlert = functions.https.onRequest((req, res) => {
@@ -151,17 +209,17 @@ exports.createAlert = functions.https.onRequest((req, res) => {
         throw new functions.https.HttpsError('invalid-argument', 'Le tableau "series" de l\'objet "data" doit contenir un tableau "values" contenant les valeurs de l\'alerte.');
     }
 
-    const timestamp = values[columns.indexOf('timestamp')];
+    const timestamp = values[columns.indexOf('time')];
     if (!(typeof timestamp === 'string') || timestamp.length === 0) {
         // FIXME: Check for RFC3339 UTC conformance
-        throw new functions.https.HttpsError('invalid-argument', 'Invalid type for "timestamp"');
+        throw new functions.https.HttpsError('invalid-argument', 'Invalid type for "time"');
     }
-    const wind_speed = values[columns.indexOf('wind_speed')];
-    if (!(typeof wind_speed === 'number' || typeof wind_speed === 'undefined')) {
+    const windSpeed = values[columns.indexOf('wind_speed')];
+    if (!(typeof windSpeed === 'number' || typeof windSpeed === 'undefined')) {
         throw new functions.https.HttpsError('invalid-argument', 'Invalid type for "wind_speed"');
     }
-    const wind_direction = values[columns.indexOf('wind_direction')];
-    if (!(typeof wind_direction === 'number' || typeof wind_direction === 'undefined')) {
+    const windDirection = values[columns.indexOf('wind_direction')];
+    if (!(typeof windDirection === 'number' || typeof windDirection === 'undefined')) {
         throw new functions.https.HttpsError('invalid-argument', 'Invalid type for "wind_direction"');
     }
     const temperature = values[columns.indexOf('temperature')];
@@ -193,30 +251,31 @@ exports.createAlert = functions.https.onRequest((req, res) => {
         throw new functions.https.HttpsError('invalid-argument', 'Invalid type for "longitude"');
     }
 
-    const alertDataObject: any = {};
-    for (let i = 0; i < columns.length; i++) {
-        alertDataObject[columns[i] as string] = values[i];
-    }
-    const alertData = alertDataObject as { [key: string]: any };
+    // const alertDataObject: any = {};
+    // for (let i = 0; i < columns.length; i++) {
+    //     alertDataObject[columns[i] as string] = values[i];
+    // }
+    // const alertData = alertDataObject as { [key: string]: any };
 
     const data = {
         timestamp:      timestamp,
+        alertName:      alertName,
         message:        message,
         level:          level,
-        previousLevel:  (typeof previousLevel === 'undefined') ? null : previousLevel,
+        previousLevel:  (typeof previousLevel   === 'undefined') ? null : previousLevel,
         topic:          topic,
         sender:         sender,
         location:       location,
-        values:         alertData,
-        wind_speed:     (typeof wind_speed === 'undefined') ? null : wind_speed,
-        wind_direction: (typeof wind_direction === 'undefined') ? null : wind_direction,
-        temperature:    (typeof temperature === 'undefined') ? null : temperature,
-        battery:        (typeof battery === 'undefined') ? null : battery,
-        roll:           (typeof roll === 'undefined') ? null : roll,
-        pitch:          (typeof pitch === 'undefined') ? null : pitch,
-        compass:        (typeof compass === 'undefined') ? null : compass,
-        latitude:       (typeof latitude === 'undefined') ? null : latitude,
-        longitude:      (typeof longitude === 'undefined') ? null : longitude
+        // values:         alertData,
+        windSpeed:      (typeof windSpeed      === 'undefined') ? null : windSpeed,
+        windDirection:  (typeof windDirection  === 'undefined') ? null : windDirection,
+        temperature:    (typeof temperature     === 'undefined') ? null : temperature,
+        battery:        (typeof battery         === 'undefined') ? null : battery,
+        roll:           (typeof roll            === 'undefined') ? null : roll,
+        pitch:          (typeof pitch           === 'undefined') ? null : pitch,
+        compass:        (typeof compass         === 'undefined') ? null : compass,
+        latitude:       (typeof latitude        === 'undefined') ? null : latitude,
+        longitude:      (typeof longitude       === 'undefined') ? null : longitude
     };
     
     // Add a new document in collection "alerts"
@@ -231,7 +290,49 @@ exports.createAlert = functions.https.onRequest((req, res) => {
 function sanitize(str: string): string {
     return str
         .normalize('NFD').replace(/[\u0300-\u036f]/g, "")   // Remove accents (https://stackoverflow.com/a/37511463/10967642)
-        .replace(/\s/g, "-")                                // Replace spaces by dashes
-        .replace("_", "-")                                  // Replace underscores by dashes to keep undescores as separators
+        .replace(/\s/g, "_")                                // Replace whitespaces by underscores
+        .replace(/-/g, "_")                                 // Replace dashes by underscores to keep dashes as separators
         .replace(/[^a-zA-Z0-9_.~%-]/g, "");                 // Remove remaining prohibited characters
 }
+
+// This is just a development function, to format data that is not formatted the right way
+// TODO: Delete this function
+exports.formatData = functions.https.onRequest((req, res) => {
+    // Forbidding PUT requests.
+    if (req.method !== 'POST') {
+        return res.status(403).send('Forbidden!');
+    }
+
+    const db = admin.firestore();
+
+    const topicNamesUpdatePromise = db.collection('alerts').listDocuments()
+    .then(documents => {
+        console.log('Listed ', documents.length, ' document(s) to update their topicName.');
+        documents.forEach(documentRef => {
+            return documentRef.get().then(document => {
+                const documentData = document.data();
+                if (!documentData) { return; }
+
+                const topicName = documentData.topic;
+                if (!(typeof topicName === 'string') || topicName.length === 0) {
+                    console.error('Could not read topic in document ', document.id);
+                    return;
+                }
+
+                const topic = sanitize(topicName);
+                return document.ref.update({
+                    topicName: topicName,
+                    topic: topic,
+                });
+            });
+        });
+        return;
+    });
+
+    return Promise.all([topicNamesUpdatePromise])
+    .then(_ => {
+        res.status(200).send('200 OK');
+    }).catch(_ => {
+        res.status(500).send('500 Internal Server Error');
+    });
+});
