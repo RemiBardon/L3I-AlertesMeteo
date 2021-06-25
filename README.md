@@ -5,6 +5,8 @@
 ![Language](https://img.shields.io/badge/language-Swift_5-orange)
 ![iOS version](https://img.shields.io/badge/iOS-13.0-informational)
 
+> J'ai fait un peu de nettoyage et j'ai supprimé le projet Firebase. Il faut donc le recréer pour utiliser l'application.
+
 ## Description
 
 ### Cadre du projet
